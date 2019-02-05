@@ -27,20 +27,22 @@ step=0.01
 n=len(x)
 times=1000
 pick_n=10 #选取的数据的量
-times_shuffle=20 #总计随机次数
+times_shuffle=10 #总计随机次数
+again=10 #重复次数
 print('下降次数:',times)
 print('MBGD选取样本数:',pick_n)
 print('MBGD随机次数:',times_shuffle)
-
+print('重复次数:',again)
 
 #求偏导直接计算
 print("[直接计算]")
 starttime=time.time()
-b=np.array([0.0,0.0])
-b[1]=(n*sum(x*y)-sum(x)*sum(y))/(n*sum(x*x)-sum(x)*sum(x))
-b[0]=sum(y)/n-b[1]*sum(x)/n
+for iii in range(again):
+    b=np.array([0.0,0.0])
+    b[1]=(n*sum(x*y)-sum(x)*sum(y))/(n*sum(x*x)-sum(x)*sum(x))
+    b[0]=sum(y)/n-b[1]*sum(x)/n
 endtime=time.time()
-print('运行时间: ',(endtime-starttime)*1000/1000,'ms a0: ',b[0],' a1: ',b[1],sep='')
+print('运行时间: ',(endtime-starttime)*1000/again,'ms a0: ',b[0],' a1: ',b[1],sep='')
 #二乘法下的误差
 current=0
 for i in range(0,len(x)):
@@ -50,19 +52,18 @@ print('损失:',current)
 #BGD
 print("[BGD]")
 starttime=time.time()
-BGD_a=np.array([0.0,0.0])
-change=1
-for i in range(times):
-    change_0=0.0
-    change_1=0.0
-    for i in range(0,len(x)):
-        change_0+=2.0*(BGD_a[1]*x[i]+BGD_a[0]-y[i])
-        change_1+=2.0*x[i]*(BGD_a[1]*x[i]+BGD_a[0]-y[i])
-    BGD_a[0]-=change_0*step/n
-    BGD_a[1]-=change_1*step/n
-    change=((change_0+change_1)/n)**2
+for iii in range(again):
+    BGD_a=np.array([0.0,0.0])
+    for ii in range(times):
+        change_0=0.0
+        change_1=0.0
+        for i in range(0,len(x)):
+            change_0+=2.0*(BGD_a[1]*x[i]+BGD_a[0]-y[i])
+            change_1+=2.0*x[i]*(BGD_a[1]*x[i]+BGD_a[0]-y[i])
+        BGD_a[0]-=change_0*step/n
+        BGD_a[1]-=change_1*step/n
 endtime=time.time()
-print('运行时间: ',(endtime-starttime)*1000,'ms a0: ',BGD_a[0],' a1: ',BGD_a[1],sep='')
+print('运行时间: ',(endtime-starttime)*1000/again,'ms a0: ',BGD_a[0],' a1: ',BGD_a[1],sep='')
 #二乘法下的误差
 current=0
 for i in range(0,len(x)):
@@ -72,17 +73,16 @@ print('损失:',current)
 #SGD
 print('[SGD]')
 starttime=time.time()
-SGD_a=np.array([0.0,0.0])
-change=1
-for i in range(times):
-    i=random.randint(0,len(x)-1)
-    change_0=2.0*(SGD_a[1]*x[i]+SGD_a[0]-y[i])
-    change_1=2.0*x[i]*(SGD_a[1]*x[i]+SGD_a[0]-y[i])
-    SGD_a[0]-=change_0*step
-    SGD_a[1]-=change_1*step
-    change=(change_0+change_1)**2
+for iii in range(again):
+    SGD_a=np.array([0.0,0.0])
+    for i in range(times):
+        i=random.randint(0,len(x)-1)
+        change_0=2.0*(SGD_a[1]*x[i]+SGD_a[0]-y[i])
+        change_1=2.0*x[i]*(SGD_a[1]*x[i]+SGD_a[0]-y[i])
+        SGD_a[0]-=change_0*step
+        SGD_a[1]-=change_1*step
 endtime=time.time()
-print('运行时间: ',(endtime-starttime)*1000,'ms a0: ',SGD_a[0],' a1: ',SGD_a[1],sep='')
+print('运行时间: ',(endtime-starttime)*1000/again,'ms a0: ',SGD_a[0],' a1: ',SGD_a[1],sep='')
 #二乘法下的误差
 current=0
 for i in range(0,len(x)):
@@ -92,27 +92,26 @@ print('损失:',current)
 #MBGD
 print('[MBGD]')
 starttime=time.time()
-MBGD_a=np.array([0.0,0.0])
-pick=list(range(len(x)))
-for ii in range(times):
-    change_0=0
-    change_1=0
-    if ii%(times/times_shuffle)==0:
-        random.shuffle(pick) #随机调用的函数
-    for i in pick[0:pick_n]:
-        change_0+=2.0*(MBGD_a[1]*x[i]+MBGD_a[0]-y[i])
-        change_1+=2.0*x[i]*(MBGD_a[1]*x[i]+MBGD_a[0]-y[i])
-    MBGD_a[0]-=change_0*step/pick_n
-    MBGD_a[1]-=change_1*step/pick_n
+for iii in range(again):
+    MBGD_a=np.array([0.0,0.0])
+    pick=list(range(len(x)))
+    for ii in range(times):
+        change_0=0
+        change_1=0
+        if ii%(times/times_shuffle)==0:
+            random.shuffle(pick) #随机调用的函数
+        for i in pick[0:pick_n]:
+            change_0+=2.0*(MBGD_a[1]*x[i]+MBGD_a[0]-y[i])
+            change_1+=2.0*x[i]*(MBGD_a[1]*x[i]+MBGD_a[0]-y[i])
+        MBGD_a[0]-=change_0*step/pick_n
+        MBGD_a[1]-=change_1*step/pick_n
 endtime=time.time()
-print('运行时间: ',(endtime-starttime)*1000,'ms a0: ',MBGD_a[0],' a1: ',MBGD_a[1],sep='')
+print('运行时间: ',(endtime-starttime)*1000/again,'ms a0: ',MBGD_a[0],' a1: ',MBGD_a[1],sep='')
 #二乘法下的误差
 current=0
 for i in range(0,len(x)):
     current+=(y[i]-MBGD_a[0]-MBGD_a[1]*x[i])**2
 print('损失:',current)
-
-
 
 #shuffle运行时间测试
 print('[shuffle运行时间测试]')
