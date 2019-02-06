@@ -10,4 +10,3 @@ while temp_a != temp_b:
 
 print(temp_a)
 
-
