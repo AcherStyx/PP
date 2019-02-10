@@ -4,6 +4,7 @@ import math
 import csv
 import time
 import random
+import tensorflow as tf
 
 #从文件读取数据
 with open('data.csv') as datafile:
@@ -113,6 +114,38 @@ for i in range(0,len(x)):
     current+=(y[i]-MBGD_a[0]-MBGD_a[1]*x[i])**2
 print('损失:',current)
 
+#使用Tensorflow
+print('[Tensorflow]')
+starttime=time.time()
+batch_size=5
+w1=tf.Variable(tf.zeros([1,1],dtype=tf.float64),name='w1')
+w2=tf.Variable(tf.zeros([1,1],dtype=tf.float64),name='w2')
+tf_x=tf.placeholder(tf.float64,shape=(None,1),name='x-input')
+tf_y_=tf.placeholder(tf.float64,shape=(None,1),name='y-input')
+tf_t=tf_x*w2
+tf_y=tf_t+w1
+loss=tf.reduce_mean(tf.square(tf_y_-tf_y),name='loss')
+train_step=tf.train.GradientDescentOptimizer(0.01).minimize(loss)
+STEP=5000
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    for ii in range(STEP):
+        #start=random.randint(0,len(x)-1)
+        #end=random.randint(start,len(x)-1)
+        #feed={tf_x:x[start:end].reshape([end-start,1]),tf_y_:y[start:end].reshape([end-start,1])}
+        feed={tf_x:x[:].reshape([len(x),1]),tf_y_:y[:].reshape([len(x),1])}
+        sess.run(train_step,feed_dict=feed)
+    TF_a=[]
+    TF_a.append(sess.run(w1,feed_dict=feed)[0][0])
+    TF_a.append(sess.run(w2,feed_dict=feed)[0][0])
+endtime=time.time()
+print('运行时间: ',(endtime-starttime)*1000/again,'ms a0: ',TF_a[0],' a1: ',TF_a[1],sep='')
+#二乘法下的误差
+current=0
+for i in range(0,len(x)):
+    current+=(y[i]-TF_a[0]-TF_a[1]*x[i])**2
+print('损失:',current)
+
 #shuffle运行时间测试
 print('[shuffle运行时间测试]')
 starttime=time.time()
@@ -127,10 +160,12 @@ D_py=px*b[1]+b[0]
 BGD_py=px*BGD_a[1]+BGD_a[0]
 SGD_py=px*SGD_a[1]+SGD_a[0]
 MBGD_py=px*MBGD_a[1]+MBGD_a[0]
+TF_py=px*TF_a[1]+TF_a[0]
 plt.plot(x,y,'go',label='data')
 plt.plot(px,D_py,'r--',label='D',linewidth=5)
 plt.plot(px,BGD_py,'b--',label='BGD')
 plt.plot(px,SGD_py,'g--',label='SGD')
 plt.plot(px,MBGD_py,'y--',label='MBGD')
+plt.plot(px,TF_py,'b',label='Tensorflow')
 plt.legend()
 plt.show()
