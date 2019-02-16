@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/ubuntu-user/MNIST/model.ckpt"
+all_model_checkpoint_paths: "/home/ubuntu-user/MNIST/model.ckpt"

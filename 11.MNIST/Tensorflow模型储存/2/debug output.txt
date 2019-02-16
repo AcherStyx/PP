@@ -1,0 +1,121 @@
+ubuntu-user@SYJ-ubuntu:/mnt/07E6085F07E6085F/[工程项目]/[GitHub]/PP/11.MNIST$ cd /mnt/07E6085F07E6085F/[工程项目]/[GitHub]/PP/11.MNIST ; env "PYTHONIOENCODING=UTF-8" "PYTHONUNBUFFERED=1" /usr/bin/python3 /home/ubuntu-user/.vscode/extensions/ms-python.python-2019.1.0/pythonFiles/ptvsd_launcher.py --default --client --host localhost --port 39353 "/mnt/07E6085F07E6085F/[工程项目]/[GitHub]/PP/11.MNIST/MNIST Kaggle 2.py" 
+WARNING:tensorflow:From /mnt/07E6085F07E6085F/[工程项目]/[GitHub]/PP/11.MNIST/MNIST Kaggle 2.py:111: softmax_cross_entropy_with_logits (from tensorflow.python.ops.nn_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+
+Future major versions of TensorFlow will allow gradients to flow
+into the labels input on backprop by default.
+
+See `tf.nn.softmax_cross_entropy_with_logits_v2`.
+
+2019-02-17 05:06:41.061233: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+===============START===============
+Load?(y/n): y
+=============SET TIMER=============
+Time limit(s, unlimited: -1): 7200
+===================================
+Training step: 0 Accuracy: 97.2 learning rate: 0.0027733515
+Training step: 1000 Accuracy: 98.2 learning rate: 0.002745618
+Training step: 2000 Accuracy: 98.5 learning rate: 0.0027181623
+Training step: 3000 Accuracy: 98.8 learning rate: 0.0026909804
+Training step: 4000 Accuracy: 98.8 learning rate: 0.0026640706
+Training step: 5000 Accuracy: 98.9 learning rate: 0.00263743
+Training step: 6000 Accuracy: 98.9 learning rate: 0.0026110555
+Training step: 7000 Accuracy: 99.0 learning rate: 0.0025849452
+Training step: 8000 Accuracy: 99.1 learning rate: 0.0025590956
+Training step: 9000 Accuracy: 99.0 learning rate: 0.0025335045
+Training step: 10000 Accuracy: 99.1 learning rate: 0.0025081697
+Training step: 11000 Accuracy: 98.7 learning rate: 0.002483088
+Training step: 12000 Accuracy: 98.8 learning rate: 0.0024582571
+Training step: 13000 Accuracy: 98.8 learning rate: 0.0024336746
+Training step: 14000 Accuracy: 98.9 learning rate: 0.0024093378
+Training step: 15000 Accuracy: 99.0 learning rate: 0.0023852447
+Training step: 16000 Accuracy: 99.4 learning rate: 0.0023613921
+Training step: 17000 Accuracy: 99.3 learning rate: 0.0023377782
+Training step: 18000 Accuracy: 99.2 learning rate: 0.0023144004
+Training step: 19000 Accuracy: 99.3 learning rate: 0.0022912563
+Training step: 20000 Accuracy: 99.4 learning rate: 0.002268344
+Training step: 21000 Accuracy: 99.3 learning rate: 0.0022456606
+Training step: 22000 Accuracy: 99.5 learning rate: 0.0022232041
+Training step: 23000 Accuracy: 99.5 learning rate: 0.002200972
+Training step: 24000 Accuracy: 99.5 learning rate: 0.002178962
+Training step: 25000 Accuracy: 99.5 learning rate: 0.0021571727
+Training step: 26000 Accuracy: 99.5 learning rate: 0.002135601
+Training step: 27000 Accuracy: 99.5 learning rate: 0.002114245
+Training step: 28000 Accuracy: 99.5 learning rate: 0.0020931026
+Training step: 29000 Accuracy: 99.5 learning rate: 0.0020721715
+Training step: 30000 Accuracy: 99.6 learning rate: 0.0020514498
+Training step: 31000 Accuracy: 99.7 learning rate: 0.0020309354
+Training step: 32000 Accuracy: 99.7 learning rate: 0.002010626
+Training step: 33000 Accuracy: 99.7 learning rate: 0.0019905197
+Training step: 34000 Accuracy: 99.7 learning rate: 0.0019706145
+Training step: 35000 Accuracy: 99.8 learning rate: 0.0019509085
+Training step: 36000 Accuracy: 99.8 learning rate: 0.0019313993
+Training step: 37000 Accuracy: 99.9 learning rate: 0.0019120853
+Training step: 38000 Accuracy: 99.9 learning rate: 0.0018929647
+Training step: 39000 Accuracy: 99.9 learning rate: 0.001874035
+Training step: 40000 Accuracy: 99.9 learning rate: 0.0018552947
+Training step: 41000 Accuracy: 99.9 learning rate: 0.0018367417
+Training step: 42000 Accuracy: 99.9 learning rate: 0.0018183744
+Training step: 43000 Accuracy: 99.9 learning rate: 0.0018001907
+Training step: 44000 Accuracy: 99.9 learning rate: 0.0017821887
+Training step: 45000 Accuracy: 99.9 learning rate: 0.0017643668
+Training step: 46000 Accuracy: 99.9 learning rate: 0.0017467232
+Training step: 47000 Accuracy: 99.9 learning rate: 0.0017292559
+Training step: 48000 Accuracy: 99.9 learning rate: 0.0017119633
+Training step: 49000 Accuracy: 99.9 learning rate: 0.0016948438
+Training step: 50000 Accuracy: 99.9 learning rate: 0.0016778953
+Training step: 51000 Accuracy: 99.9 learning rate: 0.0016611165
+Training step: 52000 Accuracy: 99.9 learning rate: 0.0016445052
+Training step: 53000 Accuracy: 99.9 learning rate: 0.0016280604
+Training step: 54000 Accuracy: 99.9 learning rate: 0.0016117796
+Training step: 55000 Accuracy: 100.0 learning rate: 0.0015956619
+Training step: 56000 Accuracy: 100.0 learning rate: 0.0015797053
+Training step: 57000 Accuracy: 100.0 learning rate: 0.0015639083
+Training step: 58000 Accuracy: 100.0 learning rate: 0.0015482692
+Training step: 59000 Accuracy: 100.0 learning rate: 0.0015327864
+Training step: 60000 Accuracy: 100.0 learning rate: 0.0015174587
+Training step: 61000 Accuracy: 100.0 learning rate: 0.0015022841
+Training step: 62000 Accuracy: 100.0 learning rate: 0.0014872612
+Training step: 63000 Accuracy: 100.0 learning rate: 0.0014723886
+Training step: 64000 Accuracy: 100.0 learning rate: 0.0014576648
+Training step: 65000 Accuracy: 100.0 learning rate: 0.0014430882
+Training step: 66000 Accuracy: 99.9 learning rate: 0.0014286573
+Training step: 67000 Accuracy: 99.9 learning rate: 0.0014143706
+Training step: 68000 Accuracy: 99.9 learning rate: 0.0014002271
+Training step: 69000 Accuracy: 99.9 learning rate: 0.0013862248
+Training step: 70000 Accuracy: 99.9 learning rate: 0.0013723625
+Training step: 71000 Accuracy: 99.9 learning rate: 0.001358639
+Training step: 72000 Accuracy: 99.9 learning rate: 0.0013450525
+Training step: 73000 Accuracy: 99.9 learning rate: 0.001331602
+Training step: 74000 Accuracy: 99.9 learning rate: 0.001318286
+Training step: 75000 Accuracy: 99.9 learning rate: 0.0013051031
+Training step: 76000 Accuracy: 99.9 learning rate: 0.0012920521
+Training step: 77000 Accuracy: 100.0 learning rate: 0.0012791316
+Training step: 78000 Accuracy: 100.0 learning rate: 0.0012663403
+Training step: 79000 Accuracy: 100.0 learning rate: 0.001253677
+Training step: 80000 Accuracy: 100.0 learning rate: 0.0012411402
+Training step: 81000 Accuracy: 100.0 learning rate: 0.0012287288
+Training step: 82000 Accuracy: 100.0 learning rate: 0.0012164415
+Training step: 83000 Accuracy: 100.0 learning rate: 0.0012042772
+Training step: 84000 Accuracy: 100.0 learning rate: 0.0011922343
+Training step: 85000 Accuracy: 100.0 learning rate: 0.001180312
+Training step: 86000 Accuracy: 100.0 learning rate: 0.0011685089
+Training step: 87000 Accuracy: 100.0 learning rate: 0.0011568238
+Training step: 88000 Accuracy: 99.9 learning rate: 0.0011452556
+Training step: 89000 Accuracy: 99.9 learning rate: 0.001133803
+Training step: 90000 Accuracy: 99.9 learning rate: 0.001122465
+Training step: 91000 Accuracy: 99.9 learning rate: 0.0011112405
+Training step: 92000 Accuracy: 99.9 learning rate: 0.0011001279
+Training step: 93000 Accuracy: 99.9 learning rate: 0.0010891267
+Training step: 94000 Accuracy: 99.9 learning rate: 0.0010782355
+Training step: 95000 Accuracy: 99.9 learning rate: 0.0010674532
+Training step: 96000 Accuracy: 99.9 learning rate: 0.0010567786
+Training step: 97000 Accuracy: 99.9 learning rate: 0.0010462109
+Training step: 98000 Accuracy: 99.9 learning rate: 0.0010357487
+Training step: 99000 Accuracy: 100.0 learning rate: 0.0010253913
+Training step: 100000 Accuracy: 100.0 learning rate: 0.0010151373
+Training step: 101000 Accuracy: 100.0 learning rate: 0.001004986
+===================================
+Save?(y/n): y
+===================================
+已终止
