@@ -31,60 +31,11 @@ LAYER3_STRIDES=[1,1,1,1]
 #层4 池化层
 LAYER4_FILTER_SIZE=[1,2,2,1]
 LAYER4_STRIDES=[1,2,2,1]
-#层1-? 全连接层
+#层1-？ 全连接层
 Layer=(784,200,100,10) 
 
 #总计训练次数
 global_step=tf.Variable(0,trainable=False)
-
-#数据集封装
-class Kaggle_Train_Digits:
-    label=[]
-    image=[]
-    def read_data(self,datatype='Train'):
-        if datatype=='Train':
-            self.label=[]
-            self.image=[]
-            with open('./train.csv') as datafile:
-                train = [[float (x) for x in row] for row in list(csv.reader(datafile,delimiter=','))[1:]]
-            for image in train:
-                self.label.append(image[0])
-                self.image.append(image[1:])
-            pass
-        else:
-            self.label=[]
-            self.image=[]
-            with open('./test.csv') as datafile:
-                test = [[float (x) for x in row] for row in list(csv.reader(datafile,delimiter=','))[1:]]
-            for image in test:
-                self.image.append(image[:])
-        return
-    def show_image(self,index):
-        print(self.label[index])
-        for i in range(28):
-            for ii in range(28):
-                if 0!=self.image[index][i*28+ii]:
-                    print(1,end='')
-                else:
-                    print(0,end='')
-            print(" ")
-    def nextbatch(self,BATCH_SIZE=None):
-        batch_image=[]
-        batch_label=[]
-        if len(self.label)==len(self.image):
-            for i in range(BATCH_SIZE):
-                temp=[]
-                randnum=random.randint(0,len(self.label)-1)
-                temp.append(self.image[randnum])
-                batch_image.append(temp)
-                temp=[0,0,0,0,0,0,0,0,0,0]
-                temp[int(self.label[randnum])]=1
-                batch_label.append(temp)
-            batch_image=numpy.reshape(batch_image,[BATCH_SIZE,28,28,1])
-            return {image:batch_image,label_:batch_label}
-        else:
-            batch_image=numpy.reshape(image,[len(image),28,28,1])
-            return {image:batch_image}
 
 #卷积神经网络 前向传播
 def CNN_interface(image):
@@ -135,6 +86,57 @@ def Forward_network_interface(data,Layer):
         else:
             result=tf.nn.relu(tf.matmul(result,weight[i]))
     return result
+
+#数据集封装
+class Kaggle_Train_Digits:
+    label=[]
+    image=[]
+    def read_data(self,datatype='Train'):
+        if datatype=='Train':
+            self.label=[]
+            self.image=[]
+            with open('./train.csv') as datafile:
+                train = [[float (x) for x in row] for row in list(csv.reader(datafile,delimiter=','))[1:]]
+            for image in train:
+                self.label.append(image[0])
+                self.image.append(image[1:])
+            pass
+        else:
+            self.label=[]
+            self.image=[]
+            with open('./test.csv') as datafile:
+                test = [[float (x) for x in row] for row in list(csv.reader(datafile,delimiter=','))[1:]]
+            for image in test:
+                self.image.append(image[:])
+        return
+    def show_image(self,index):
+        print(self.label[index])
+        for i in range(28):
+            for ii in range(28):
+                if 0!=self.image[index][i*28+ii]:
+                    print(1,end='')
+                else:
+                    print(0,end='')
+            print(" ")
+    def nextbatch(self,BATCH_SIZE=None):
+        batch_image=[]
+        batch_label=[]
+        if len(self.label)==len(self.image):
+            for i in range(BATCH_SIZE):
+                temp=[]
+                randnum=random.randint(0,len(self.label)-1)
+                temp.append(self.image[randnum])
+                batch_image.append(temp)
+                temp=[0,0,0,0,0,0,0,0,0,0]
+                temp[int(self.label[randnum])]=1
+                batch_label.append(temp)
+            batch_image=numpy.reshape(batch_image,[BATCH_SIZE,28,28,1])
+            return {image:batch_image,label_:batch_label}
+        else:
+            batch_image=numpy.reshape(image,[len(image),28,28,1])
+            return {image:batch_image}
+        
+
 
 
 image=tf.placeholder(tf.float32,shape=[None,28,28,1],name='image')
