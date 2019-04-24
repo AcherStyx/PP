@@ -151,7 +151,8 @@ with tf.Session() as sess:
                 accuracy_test_count=ACCURACY_TEST_DATA_UPDATE_FREQUENCY
             accuracy_test_count-=1
             #print("Training step:",i,'Accuracy:',sess.run(accuracy,feed_dict=feed),sess.run(loss,feed_dict=feed),sess.run(learning_rate),answer(sess.run(y,feed_dict=feed)[0]),answer(sess.run(y_,feed_dict=feed)[0]))
-            print("Ts:",i,'Acc:',sess.run(accuracy,feed_dict=accuracy_test_dict),'lr:',sess.run(learning_rate),sess.run(regularization,feed_dict=accuracy_test_dict),sess.run(cross_entropy,feed_dict=accuracy_test_dict))
+            #print("Ts:",i,'Acc:',sess.run(accuracy,feed_dict=accuracy_test_dict),'lr:',sess.run(learning_rate),sess.run(regularization,feed_dict=accuracy_test_dict),sess.run(cross_entropy,feed_dict=accuracy_test_dict))
+            print("Train Step:",i,'Accuracy:',sess.run(accuracy,feed_dict=accuracy_test_dict))
     print("===================================")
     reply=input('Save?(y/n): ')
     if reply=='y':
