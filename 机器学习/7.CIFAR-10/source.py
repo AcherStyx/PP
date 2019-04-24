@@ -11,15 +11,15 @@ BATCH_SIZE=10
 TRAINING_STEPS=50000
 DATASET_FOLDER='./dataset/'
 #频率
-CHECK_FREQUNCY=100
+CHECK_FREQUNCY=1000
 ACCURACY_TEST_DATA_UPDATE_FREQUENCY=5
-ACCURACY_TEST_BATCHSIZE=400
+ACCURACY_TEST_BATCHSIZE=1000
 #学习率设置
 LEARNING_RATE_BASE=0.001
 LEARNING_RATE_DECAY_RATE=0.99
 LEARNING_RATE_DECAY_STEP=1000
 #正则化比率
-REGULARIZATION_RATE=0.005
+REGULARIZATION_RATE=0.01
 
 IMAGE_SIZE=[32,32,3]
 #层1 卷积层
@@ -41,76 +41,86 @@ Layer=(1024,200,100,10)
 #总计训练次数
 global_step=tf.Variable(0,trainable=False)
 
+#
+OUTPUT_FORMAT_STRING=">> Steps:{step: <5} Learning rate:{lr:.5f} Cross entropy:{ce:.5f} Regularization:{re:.5f}\n   Accuracy:{acc:.2%} \n   Accuracy in Train data:{accit:.2%}"
+
 #数据集读取
 class CIFAR10:
-  '''摘自：https://www.cnblogs.com/jimobuwu/p/9161531.html
-  自己稍作封装'''
-  Train={}
-  Train_Size=0
-  Test={}
-  Test_Size=0
-  def __load_pickle(self,f):
-      version = platform.python_version_tuple() # 取python版本号
-      if version[0] == '2':
-          return  pickle.load(f) # pickle.load, 反序列化为python的数据类型
-      elif version[0] == '3':
-          return  pickle.load(f, encoding='latin1')
-      raise ValueError("invalid python version: {}".format(version))
-  def __load_CIFAR_batch(self,filename):
-    """ load single batch of cifar """
-    with open(filename, 'rb') as f:
-      datadict = self.__load_pickle(f)   # dict类型
-      X = datadict['data']        # X, ndarray, 像素值
-      Y = datadict['labels']      # Y, list, 标签, 分类
-      # reshape, 一维数组转为矩阵10000行3列。每个entries是32x32
-      # transpose，转置
-      # astype，复制，同时指定类型
-      X = X.reshape(10000, 3, 32, 32).transpose(0,2,3,1).astype("float")
-      Y = np.array(Y)
-      return X, Y
-  def nextbatch(self,batch_size,type='Train'):
-    batch_image=[]
-    batch_label=[]
-    if type=='Train':
-      for i in range(batch_size):
-        temp=[]
-        randnum=random.randint(0,self.Train_Size-1)
-        temp.append(self.Train['image'][randnum])
-        batch_image.append(temp)
-        temp=[0,0,0,0,0,0,0,0,0,0]
-        temp[int(self.Train['label'][randnum])]=1
-        batch_label.append(temp)
-      batch_image=np.reshape(batch_image,[batch_size]+IMAGE_SIZE)
-      return {image:batch_image,label_:batch_label}
-    else:
-      for i in range(batch_size):
-        temp=[]
-        randnum=random.randint(0,self.Test_Size-1)
-        temp.append(self.Test['image'][randnum])
-        batch_image.append(temp)
-        temp=[0,0,0,0,0,0,0,0,0,0]
-        temp[int(self.Test['label'][randnum])]=1
-        batch_label.append(temp)
-      batch_image=np.reshape(batch_image,[batch_size]+IMAGE_SIZE)
-      return {image:batch_image,label_:batch_label}
-  def __init__(self,ROOT,batch_index=[1,2,3,4,5],load_test=1):
-    """ load all of cifar """
-    xs = [] # list
-    ys = []
-    # 训练集batch 1～5
-    for b in batch_index:
-      f = os.path.join(ROOT, 'data_batch_%d' % (b, ))
-      X, Y = self.__load_CIFAR_batch(f)
-      xs.append(X) # 在list尾部添加对象X, x = [..., [X]]
-      ys.append(Y)    
-      self.Train_Size+=10000
-    self.Train['image'] = np.concatenate(xs) # [ndarray, ndarray] 合并为一个ndarray
-    self.Train['label'] = np.concatenate(ys)
-    del X, Y
-    # 测试集
-    if load_test==1:
-      self.Test['image'] , self.Test['label'] = self.__load_CIFAR_batch(os.path.join(ROOT, 'test_batch'))
-      self.Test_Size=10000
+    '''摘自：https://www.cnblogs.com/jimobuwu/p/9161531.html
+    自己稍作封装'''
+    Train={}
+    Train_Size=0
+    Test={}
+    Test_Size=0
+    def __load_pickle(self,f):
+        version = platform.python_version_tuple() # 取python版本号
+        if version[0] == '2':
+            return  pickle.load(f) # pickle.load, 反序列化为python的数据类型
+        elif version[0] == '3':
+            return  pickle.load(f, encoding='latin1')
+        raise ValueError("invalid python version: {}".format(version))
+    def __load_CIFAR_batch(self,filename):
+        """ load single batch of cifar """
+        with open(filename, 'rb') as f:
+            datadict = self.__load_pickle(f)   # dict类型
+        X = datadict['data']        # X, ndarray, 像素值
+        Y = datadict['labels']      # Y, list, 标签, 分类
+        # reshape, 一维数组转为矩阵10000行3列。每个entries是32x32
+        # transpose，转置
+        # astype，复制，同时指定类型
+        X = X.reshape(10000, 3, 32, 32).transpose(0,2,3,1).astype("float")
+        Y = np.array(Y)
+        return X, Y
+    def nextbatch(self,batch_size,type='Train'):
+        batch_image=[]
+        batch_label=[]
+        if type=='Train':
+            for i in range(batch_size):
+                temp=[]
+                randnum=random.randint(0,self.Train_Size-1)
+                temp.append(self.Train['image'][randnum])
+                batch_image.append(temp)
+                temp=[0,0,0,0,0,0,0,0,0,0]
+                temp[int(self.Train['label'][randnum])]=1
+                batch_label.append(temp)
+            batch_image=np.reshape(batch_image,[batch_size]+IMAGE_SIZE)
+            return {image:batch_image,label_:batch_label}
+        else:
+            for i in range(batch_size):
+                temp=[]
+                randnum=random.randint(0,self.Test_Size-1)
+                temp.append(self.Test['image'][randnum])
+                batch_image.append(temp)
+                temp=[0,0,0,0,0,0,0,0,0,0]
+                temp[int(self.Test['label'][randnum])]=1
+                batch_label.append(temp)
+            batch_image=np.reshape(batch_image,[batch_size]+IMAGE_SIZE)
+            return {image:batch_image,label_:batch_label}
+    def testdict(self):
+        batch_label=[]
+        for i in range(self.Test_Size):
+            temp=[0,0,0,0,0,0,0,0,0,0]
+            temp[int(self.Test['label'][i])]=1
+            batch_label.append(temp)
+        return {image:self.Test['image'],label_:batch_label}
+    def __init__(self,ROOT,batch_index=[1,2,3,4,5],load_test=1):
+        """ load all of cifar """
+        xs = [] # list
+        ys = []
+        # 训练集batch 1～5
+        for b in batch_index:
+            f = os.path.join(ROOT, 'data_batch_%d' % (b, ))
+            X, Y = self.__load_CIFAR_batch(f)
+            xs.append(X) # 在list尾部添加对象X, x = [..., [X]]
+            ys.append(Y)    
+            self.Train_Size+=10000
+        self.Train['image'] = np.concatenate(xs) # [ndarray, ndarray] 合并为一个ndarray
+        self.Train['label'] = np.concatenate(ys)
+        del X, Y
+        # 测试集
+        if load_test==1:
+            self.Test['image'] , self.Test['label'] = self.__load_CIFAR_batch(os.path.join(ROOT, 'test_batch'))
+            self.Test_Size=10000
 
 #卷积神经网络
 def CNN_interface(image):
@@ -210,7 +220,6 @@ with tf.Session() as sess:
             print(i+1,',',output,sep='')
     print("===================RESULT====================")
     accuracy_test_count=0
-
     time_start=time.time()
     for i in range(TRAINING_STEPS):
         #计时器
@@ -220,15 +229,17 @@ with tf.Session() as sess:
         #训练
         feed_dict_train=dataset.nextbatch(BATCH_SIZE)
         sess.run(train_step,feed_dict=feed_dict_train)
+        del feed_dict_train
         #测试
         if i%CHECK_FREQUNCY==0:
             if accuracy_test_count==0:
+                accuracy_test_train_dict=dataset.nextbatch(ACCURACY_TEST_BATCHSIZE)
                 accuracy_test_dict=dataset.nextbatch(ACCURACY_TEST_BATCHSIZE,type='Test')
                 accuracy_test_count=ACCURACY_TEST_DATA_UPDATE_FREQUENCY
             accuracy_test_count-=1
             #print("Training step:",i,'Accuracy:',sess.run(accuracy,feed_dict=feed),sess.run(loss,feed_dict=feed),sess.run(learning_rate),answer(sess.run(y,feed_dict=feed)[0]),answer(sess.run(y_,feed_dict=feed)[0]))
             #print("Steps:",i,'Accuracy:',"%.1f" % sess.run(accuracy,feed_dict=accuracy_test_dict),'Learning rate:',sess.run(learning_rate),sess.run(regularization,feed_dict=accuracy_test_dict),sess.run(cross_entropy,feed_dict=accuracy_test_dict))
-            print(">> Steps:{step: <5} Accuracy:{acc:.2%}\n   Learning rate:{lr:.5f} Cross entropy:{ce:.5f} Regularization:{re:.5f}".format(step=i,acc=sess.run(accuracy,feed_dict=accuracy_test_dict),lr=sess.run(learning_rate),ce=sess.run(cross_entropy,feed_dict=accuracy_test_dict),re=sess.run(regularization,feed_dict=accuracy_test_dict)))
+            print(OUTPUT_FORMAT_STRING.format(step=i,acc=sess.run(accuracy,feed_dict=accuracy_test_dict),lr=sess.run(learning_rate),ce=sess.run(cross_entropy,feed_dict=accuracy_test_dict),re=sess.run(regularization,feed_dict=accuracy_test_dict),accit=sess.run(accuracy,feed_dict=accuracy_test_train_dict)))
     writer=tf.summary.FileWriter("./log",tf.get_default_graph())
     writer.close()
     print("===================================")
