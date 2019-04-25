@@ -1,0 +1,622 @@
+<built-in function input> <tf.Variable 'Layer5_fulllink/Variable:0' shape=(1024, 200) dtype=float32_ref>
+<built-in function input> <tf.Variable 'Layer5_fulllink/Variable_1:0' shape=(200, 100) dtype=float32_ref>
+<built-in function input> <tf.Variable 'Layer5_fulllink/Variable_2:0' shape=(100, 10) dtype=float32_ref>
+WARNING:tensorflow:From /mnt/07E6085F07E6085F/[工程项目]/[Code]/Python/机器学习/7.CIFAR-10/Tensorflow_model/1.without dropout/Code.py:191: softmax_cross_entropy_with_logits (from tensorflow.python.ops.nn_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+
+Future major versions of TensorFlow will allow gradients to flow
+into the labels input on backprop by default.
+
+See `tf.nn.softmax_cross_entropy_with_logits_v2`.
+
+2019-04-24 20:57:07.846183: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+==================SET TIMER==================
+Set time limit(s, unlimited: -1): 3600
+====================LOAD+====================
+Load model?(y/n): n
+=================INPUT DATA==================
+===================RESULT====================
+>> Steps:0     Learning rate:0.00400 Cross entropy:3.67862 Regularization:0.05675
+   Accuracy:9.60% 
+   Accuracy in Train data:8.60%
+>> Steps:1000  Learning rate:0.00396 Cross entropy:2.29094 Regularization:0.05677
+   Accuracy:16.20% 
+   Accuracy in Train data:16.10%
+>> Steps:2000  Learning rate:0.00392 Cross entropy:2.26827 Regularization:0.05498
+   Accuracy:18.60% 
+   Accuracy in Train data:16.40%
+>> Steps:3000  Learning rate:0.00388 Cross entropy:2.22370 Regularization:0.05388
+   Accuracy:20.20% 
+   Accuracy in Train data:18.00%
+>> Steps:4000  Learning rate:0.00384 Cross entropy:2.18353 Regularization:0.05294
+   Accuracy:21.80% 
+   Accuracy in Train data:21.30%
+>> Steps:5000  Learning rate:0.00380 Cross entropy:2.18753 Regularization:0.05208
+   Accuracy:25.00% 
+   Accuracy in Train data:24.60%
+>> Steps:6000  Learning rate:0.00377 Cross entropy:2.20222 Regularization:0.05167
+   Accuracy:21.20% 
+   Accuracy in Train data:22.40%
+>> Steps:7000  Learning rate:0.00373 Cross entropy:2.11767 Regularization:0.05148
+   Accuracy:27.10% 
+   Accuracy in Train data:27.00%
+>> Steps:8000  Learning rate:0.00369 Cross entropy:2.11271 Regularization:0.05167
+   Accuracy:28.60% 
+   Accuracy in Train data:28.50%
+>> Steps:9000  Learning rate:0.00365 Cross entropy:2.10248 Regularization:0.05230
+   Accuracy:27.50% 
+   Accuracy in Train data:28.40%
+>> Steps:10000 Learning rate:0.00362 Cross entropy:2.06409 Regularization:0.05322
+   Accuracy:29.80% 
+   Accuracy in Train data:29.60%
+>> Steps:11000 Learning rate:0.00358 Cross entropy:2.05616 Regularization:0.05451
+   Accuracy:29.50% 
+   Accuracy in Train data:29.80%
+>> Steps:12000 Learning rate:0.00355 Cross entropy:1.96937 Regularization:0.05586
+   Accuracy:29.20% 
+   Accuracy in Train data:30.90%
+>> Steps:13000 Learning rate:0.00351 Cross entropy:2.02244 Regularization:0.05730
+   Accuracy:23.30% 
+   Accuracy in Train data:26.10%
+>> Steps:14000 Learning rate:0.00347 Cross entropy:2.11660 Regularization:0.05885
+   Accuracy:28.40% 
+   Accuracy in Train data:26.60%
+>> Steps:15000 Learning rate:0.00344 Cross entropy:2.10652 Regularization:0.06019
+   Accuracy:24.50% 
+   Accuracy in Train data:24.90%
+>> Steps:16000 Learning rate:0.00341 Cross entropy:1.99576 Regularization:0.06105
+   Accuracy:31.20% 
+   Accuracy in Train data:30.20%
+>> Steps:17000 Learning rate:0.00337 Cross entropy:2.08844 Regularization:0.06255
+   Accuracy:29.80% 
+   Accuracy in Train data:30.70%
+>> Steps:18000 Learning rate:0.00334 Cross entropy:1.87811 Regularization:0.06421
+   Accuracy:34.40% 
+   Accuracy in Train data:36.10%
+>> Steps:19000 Learning rate:0.00330 Cross entropy:1.95470 Regularization:0.06523
+   Accuracy:29.40% 
+   Accuracy in Train data:32.10%
+>> Steps:20000 Learning rate:0.00327 Cross entropy:2.03615 Regularization:0.06684
+   Accuracy:30.90% 
+   Accuracy in Train data:28.20%
+>> Steps:21000 Learning rate:0.00324 Cross entropy:1.88983 Regularization:0.06807
+   Accuracy:33.00% 
+   Accuracy in Train data:31.50%
+>> Steps:22000 Learning rate:0.00321 Cross entropy:1.86434 Regularization:0.06950
+   Accuracy:34.60% 
+   Accuracy in Train data:34.70%
+>> Steps:23000 Learning rate:0.00317 Cross entropy:1.91787 Regularization:0.07001
+   Accuracy:34.10% 
+   Accuracy in Train data:33.80%
+>> Steps:24000 Learning rate:0.00314 Cross entropy:1.86449 Regularization:0.07128
+   Accuracy:32.40% 
+   Accuracy in Train data:33.30%
+>> Steps:25000 Learning rate:0.00311 Cross entropy:1.87969 Regularization:0.07203
+   Accuracy:33.70% 
+   Accuracy in Train data:34.40%
+>> Steps:26000 Learning rate:0.00308 Cross entropy:1.82770 Regularization:0.07267
+   Accuracy:35.20% 
+   Accuracy in Train data:34.30%
+>> Steps:27000 Learning rate:0.00305 Cross entropy:2.00833 Regularization:0.07363
+   Accuracy:30.50% 
+   Accuracy in Train data:31.10%
+>> Steps:28000 Learning rate:0.00302 Cross entropy:1.88333 Regularization:0.07397
+   Accuracy:29.80% 
+   Accuracy in Train data:32.10%
+>> Steps:29000 Learning rate:0.00299 Cross entropy:1.87101 Regularization:0.07475
+   Accuracy:30.00% 
+   Accuracy in Train data:31.30%
+>> Steps:30000 Learning rate:0.00296 Cross entropy:1.91810 Regularization:0.07534
+   Accuracy:31.20% 
+   Accuracy in Train data:34.10%
+>> Steps:31000 Learning rate:0.00293 Cross entropy:1.96935 Regularization:0.07577
+   Accuracy:32.40% 
+   Accuracy in Train data:33.80%
+>> Steps:32000 Learning rate:0.00290 Cross entropy:1.89499 Regularization:0.07601
+   Accuracy:32.60% 
+   Accuracy in Train data:34.50%
+>> Steps:33000 Learning rate:0.00287 Cross entropy:1.99768 Regularization:0.07668
+   Accuracy:29.30% 
+   Accuracy in Train data:31.10%
+>> Steps:34000 Learning rate:0.00284 Cross entropy:1.85202 Regularization:0.07758
+   Accuracy:37.40% 
+   Accuracy in Train data:36.90%
+>> Steps:35000 Learning rate:0.00281 Cross entropy:1.91137 Regularization:0.07768
+   Accuracy:31.50% 
+   Accuracy in Train data:34.30%
+>> Steps:36000 Learning rate:0.00279 Cross entropy:1.82431 Regularization:0.07788
+   Accuracy:33.20% 
+   Accuracy in Train data:35.70%
+>> Steps:37000 Learning rate:0.00276 Cross entropy:1.88794 Regularization:0.07838
+   Accuracy:33.00% 
+   Accuracy in Train data:36.50%
+>> Steps:38000 Learning rate:0.00273 Cross entropy:1.89823 Regularization:0.07819
+   Accuracy:32.50% 
+   Accuracy in Train data:35.30%
+>> Steps:39000 Learning rate:0.00270 Cross entropy:1.88111 Regularization:0.07850
+   Accuracy:33.40% 
+   Accuracy in Train data:36.90%
+>> Steps:40000 Learning rate:0.00268 Cross entropy:1.82186 Regularization:0.07874
+   Accuracy:34.90% 
+   Accuracy in Train data:34.20%
+>> Steps:41000 Learning rate:0.00265 Cross entropy:1.85536 Regularization:0.07949
+   Accuracy:37.10% 
+   Accuracy in Train data:34.60%
+>> Steps:42000 Learning rate:0.00262 Cross entropy:2.00216 Regularization:0.07986
+   Accuracy:33.10% 
+   Accuracy in Train data:33.10%
+>> Steps:43000 Learning rate:0.00260 Cross entropy:1.77510 Regularization:0.07997
+   Accuracy:38.50% 
+   Accuracy in Train data:37.00%
+>> Steps:44000 Learning rate:0.00257 Cross entropy:1.82078 Regularization:0.08003
+   Accuracy:36.20% 
+   Accuracy in Train data:36.40%
+>> Steps:45000 Learning rate:0.00254 Cross entropy:1.90809 Regularization:0.08031
+   Accuracy:29.60% 
+   Accuracy in Train data:30.50%
+>> Steps:46000 Learning rate:0.00252 Cross entropy:1.73721 Regularization:0.08065
+   Accuracy:37.90% 
+   Accuracy in Train data:35.30%
+>> Steps:47000 Learning rate:0.00249 Cross entropy:1.94902 Regularization:0.08102
+   Accuracy:31.70% 
+   Accuracy in Train data:30.50%
+>> Steps:48000 Learning rate:0.00247 Cross entropy:1.75886 Regularization:0.08124
+   Accuracy:37.00% 
+   Accuracy in Train data:40.60%
+>> Steps:49000 Learning rate:0.00244 Cross entropy:1.79759 Regularization:0.08164
+   Accuracy:34.30% 
+   Accuracy in Train data:34.80%
+>> Steps:50000 Learning rate:0.00242 Cross entropy:1.74214 Regularization:0.08163
+   Accuracy:39.60% 
+   Accuracy in Train data:41.10%
+>> Steps:51000 Learning rate:0.00240 Cross entropy:1.76335 Regularization:0.08168
+   Accuracy:41.30% 
+   Accuracy in Train data:39.40%
+>> Steps:52000 Learning rate:0.00237 Cross entropy:1.72249 Regularization:0.08175
+   Accuracy:40.60% 
+   Accuracy in Train data:42.50%
+>> Steps:53000 Learning rate:0.00235 Cross entropy:1.80607 Regularization:0.08197
+   Accuracy:35.30% 
+   Accuracy in Train data:34.30%
+>> Steps:54000 Learning rate:0.00232 Cross entropy:1.75696 Regularization:0.08244
+   Accuracy:37.40% 
+   Accuracy in Train data:39.10%
+>> Steps:55000 Learning rate:0.00230 Cross entropy:1.84978 Regularization:0.08312
+   Accuracy:36.30% 
+   Accuracy in Train data:40.10%
+>> Steps:56000 Learning rate:0.00228 Cross entropy:1.87994 Regularization:0.08363
+   Accuracy:34.00% 
+   Accuracy in Train data:33.20%
+>> Steps:57000 Learning rate:0.00226 Cross entropy:1.81565 Regularization:0.08381
+   Accuracy:39.10% 
+   Accuracy in Train data:38.60%
+>> Steps:58000 Learning rate:0.00223 Cross entropy:1.82344 Regularization:0.08423
+   Accuracy:37.70% 
+   Accuracy in Train data:37.50%
+>> Steps:59000 Learning rate:0.00221 Cross entropy:1.79949 Regularization:0.08472
+   Accuracy:37.50% 
+   Accuracy in Train data:38.10%
+>> Steps:60000 Learning rate:0.00219 Cross entropy:1.88406 Regularization:0.08533
+   Accuracy:36.60% 
+   Accuracy in Train data:36.40%
+>> Steps:61000 Learning rate:0.00217 Cross entropy:1.84842 Regularization:0.08563
+   Accuracy:37.00% 
+   Accuracy in Train data:40.90%
+>> Steps:62000 Learning rate:0.00215 Cross entropy:1.81788 Regularization:0.08583
+   Accuracy:37.00% 
+   Accuracy in Train data:41.70%
+>> Steps:63000 Learning rate:0.00212 Cross entropy:1.80091 Regularization:0.08618
+   Accuracy:40.40% 
+   Accuracy in Train data:45.40%
+>> Steps:64000 Learning rate:0.00210 Cross entropy:1.79103 Regularization:0.08668
+   Accuracy:39.00% 
+   Accuracy in Train data:42.10%
+>> Steps:65000 Learning rate:0.00208 Cross entropy:1.66665 Regularization:0.08698
+   Accuracy:41.10% 
+   Accuracy in Train data:39.80%
+>> Steps:66000 Learning rate:0.00206 Cross entropy:1.73176 Regularization:0.08712
+   Accuracy:40.40% 
+   Accuracy in Train data:38.80%
+>> Steps:67000 Learning rate:0.00204 Cross entropy:1.69694 Regularization:0.08738
+   Accuracy:39.70% 
+   Accuracy in Train data:42.10%
+>> Steps:68000 Learning rate:0.00202 Cross entropy:1.68481 Regularization:0.08762
+   Accuracy:38.10% 
+   Accuracy in Train data:41.10%
+>> Steps:69000 Learning rate:0.00200 Cross entropy:1.78129 Regularization:0.08800
+   Accuracy:40.30% 
+   Accuracy in Train data:37.70%
+>> Steps:70000 Learning rate:0.00198 Cross entropy:1.73160 Regularization:0.08846
+   Accuracy:39.50% 
+   Accuracy in Train data:40.80%
+>> Steps:71000 Learning rate:0.00196 Cross entropy:1.76211 Regularization:0.08874
+   Accuracy:36.40% 
+   Accuracy in Train data:37.90%
+>> Steps:72000 Learning rate:0.00194 Cross entropy:1.75443 Regularization:0.08898
+   Accuracy:39.70% 
+   Accuracy in Train data:40.30%
+>> Steps:73000 Learning rate:0.00192 Cross entropy:1.68415 Regularization:0.08929
+   Accuracy:40.30% 
+   Accuracy in Train data:45.80%
+>> Steps:74000 Learning rate:0.00190 Cross entropy:1.68269 Regularization:0.08951
+   Accuracy:37.90% 
+   Accuracy in Train data:42.40%
+>> Steps:75000 Learning rate:0.00188 Cross entropy:1.66191 Regularization:0.08980
+   Accuracy:42.70% 
+   Accuracy in Train data:39.90%
+>> Steps:76000 Learning rate:0.00186 Cross entropy:1.63266 Regularization:0.08990
+   Accuracy:40.90% 
+   Accuracy in Train data:41.00%
+>> Steps:77000 Learning rate:0.00184 Cross entropy:1.69617 Regularization:0.09008
+   Accuracy:42.00% 
+   Accuracy in Train data:42.90%
+>> Steps:78000 Learning rate:0.00183 Cross entropy:1.65586 Regularization:0.09056
+   Accuracy:40.60% 
+   Accuracy in Train data:42.10%
+>> Steps:79000 Learning rate:0.00181 Cross entropy:1.64772 Regularization:0.09080
+   Accuracy:41.50% 
+   Accuracy in Train data:39.60%
+>> Steps:80000 Learning rate:0.00179 Cross entropy:1.69884 Regularization:0.09119
+   Accuracy:42.80% 
+   Accuracy in Train data:43.20%
+>> Steps:81000 Learning rate:0.00177 Cross entropy:1.73308 Regularization:0.09166
+   Accuracy:42.10% 
+   Accuracy in Train data:43.40%
+>> Steps:82000 Learning rate:0.00175 Cross entropy:1.71765 Regularization:0.09192
+   Accuracy:44.90% 
+   Accuracy in Train data:46.40%
+>> Steps:83000 Learning rate:0.00174 Cross entropy:1.68822 Regularization:0.09210
+   Accuracy:42.50% 
+   Accuracy in Train data:48.00%
+>> Steps:84000 Learning rate:0.00172 Cross entropy:1.77722 Regularization:0.09239
+   Accuracy:41.50% 
+   Accuracy in Train data:44.70%
+>> Steps:85000 Learning rate:0.00170 Cross entropy:1.66038 Regularization:0.09279
+   Accuracy:45.60% 
+   Accuracy in Train data:44.50%
+>> Steps:86000 Learning rate:0.00169 Cross entropy:1.61076 Regularization:0.09288
+   Accuracy:46.40% 
+   Accuracy in Train data:44.40%
+>> Steps:87000 Learning rate:0.00167 Cross entropy:1.69491 Regularization:0.09303
+   Accuracy:45.60% 
+   Accuracy in Train data:46.30%
+>> Steps:88000 Learning rate:0.00165 Cross entropy:1.59274 Regularization:0.09338
+   Accuracy:49.20% 
+   Accuracy in Train data:47.20%
+>> Steps:89000 Learning rate:0.00164 Cross entropy:1.61053 Regularization:0.09382
+   Accuracy:46.80% 
+   Accuracy in Train data:44.50%
+>> Steps:90000 Learning rate:0.00162 Cross entropy:1.58277 Regularization:0.09418
+   Accuracy:43.60% 
+   Accuracy in Train data:45.20%
+>> Steps:91000 Learning rate:0.00160 Cross entropy:1.75811 Regularization:0.09449
+   Accuracy:41.10% 
+   Accuracy in Train data:43.00%
+>> Steps:92000 Learning rate:0.00159 Cross entropy:1.61325 Regularization:0.09473
+   Accuracy:44.30% 
+   Accuracy in Train data:49.10%
+>> Steps:93000 Learning rate:0.00157 Cross entropy:1.56679 Regularization:0.09492
+   Accuracy:45.30% 
+   Accuracy in Train data:49.30%
+>> Steps:94000 Learning rate:0.00156 Cross entropy:1.70518 Regularization:0.09523
+   Accuracy:40.60% 
+   Accuracy in Train data:43.40%
+>> Steps:95000 Learning rate:0.00154 Cross entropy:1.62750 Regularization:0.09534
+   Accuracy:44.40% 
+   Accuracy in Train data:46.00%
+>> Steps:96000 Learning rate:0.00152 Cross entropy:1.59130 Regularization:0.09565
+   Accuracy:43.10% 
+   Accuracy in Train data:47.20%
+>> Steps:97000 Learning rate:0.00151 Cross entropy:1.60674 Regularization:0.09585
+   Accuracy:45.90% 
+   Accuracy in Train data:49.90%
+>> Steps:98000 Learning rate:0.00149 Cross entropy:1.59532 Regularization:0.09623
+   Accuracy:40.60% 
+   Accuracy in Train data:45.80%
+>> Steps:99000 Learning rate:0.00148 Cross entropy:1.57887 Regularization:0.09655
+   Accuracy:44.50% 
+   Accuracy in Train data:48.20%
+>> Steps:100000 Learning rate:0.00146 Cross entropy:1.65500 Regularization:0.09677
+   Accuracy:41.90% 
+   Accuracy in Train data:50.40%
+>> Steps:101000 Learning rate:0.00145 Cross entropy:1.66809 Regularization:0.09716
+   Accuracy:44.80% 
+   Accuracy in Train data:53.30%
+>> Steps:102000 Learning rate:0.00143 Cross entropy:1.66268 Regularization:0.09735
+   Accuracy:46.50% 
+   Accuracy in Train data:51.00%
+>> Steps:103000 Learning rate:0.00142 Cross entropy:1.67861 Regularization:0.09775
+   Accuracy:44.30% 
+   Accuracy in Train data:52.00%
+>> Steps:104000 Learning rate:0.00141 Cross entropy:1.56047 Regularization:0.09809
+   Accuracy:48.00% 
+   Accuracy in Train data:53.80%
+>> Steps:105000 Learning rate:0.00139 Cross entropy:1.63541 Regularization:0.09833
+   Accuracy:42.00% 
+   Accuracy in Train data:45.60%
+>> Steps:106000 Learning rate:0.00138 Cross entropy:1.59427 Regularization:0.09879
+   Accuracy:44.90% 
+   Accuracy in Train data:51.40%
+>> Steps:107000 Learning rate:0.00136 Cross entropy:1.66704 Regularization:0.09904
+   Accuracy:43.00% 
+   Accuracy in Train data:48.20%
+>> Steps:108000 Learning rate:0.00135 Cross entropy:1.60245 Regularization:0.09929
+   Accuracy:44.10% 
+   Accuracy in Train data:49.30%
+>> Steps:109000 Learning rate:0.00134 Cross entropy:1.57343 Regularization:0.09985
+   Accuracy:47.20% 
+   Accuracy in Train data:48.20%
+>> Steps:110000 Learning rate:0.00132 Cross entropy:1.55830 Regularization:0.10019
+   Accuracy:48.90% 
+   Accuracy in Train data:49.10%
+>> Steps:111000 Learning rate:0.00131 Cross entropy:1.50858 Regularization:0.10038
+   Accuracy:47.10% 
+   Accuracy in Train data:51.80%
+>> Steps:112000 Learning rate:0.00130 Cross entropy:1.49151 Regularization:0.10065
+   Accuracy:47.80% 
+   Accuracy in Train data:53.50%
+>> Steps:113000 Learning rate:0.00128 Cross entropy:1.49643 Regularization:0.10105
+   Accuracy:49.10% 
+   Accuracy in Train data:52.00%
+>> Steps:114000 Learning rate:0.00127 Cross entropy:1.59368 Regularization:0.10120
+   Accuracy:46.00% 
+   Accuracy in Train data:48.20%
+>> Steps:115000 Learning rate:0.00126 Cross entropy:1.50293 Regularization:0.10140
+   Accuracy:51.30% 
+   Accuracy in Train data:52.00%
+>> Steps:116000 Learning rate:0.00125 Cross entropy:1.50330 Regularization:0.10170
+   Accuracy:51.10% 
+   Accuracy in Train data:54.90%
+>> Steps:117000 Learning rate:0.00123 Cross entropy:1.54233 Regularization:0.10180
+   Accuracy:49.70% 
+   Accuracy in Train data:53.50%
+>> Steps:118000 Learning rate:0.00122 Cross entropy:1.54406 Regularization:0.10205
+   Accuracy:49.60% 
+   Accuracy in Train data:53.00%
+>> Steps:119000 Learning rate:0.00121 Cross entropy:1.52098 Regularization:0.10208
+   Accuracy:49.90% 
+   Accuracy in Train data:53.50%
+>> Steps:120000 Learning rate:0.00120 Cross entropy:1.52916 Regularization:0.10259
+   Accuracy:49.20% 
+   Accuracy in Train data:50.50%
+>> Steps:121000 Learning rate:0.00119 Cross entropy:1.49937 Regularization:0.10273
+   Accuracy:49.00% 
+   Accuracy in Train data:52.90%
+>> Steps:122000 Learning rate:0.00117 Cross entropy:1.51143 Regularization:0.10310
+   Accuracy:47.80% 
+   Accuracy in Train data:52.80%
+>> Steps:123000 Learning rate:0.00116 Cross entropy:1.44135 Regularization:0.10333
+   Accuracy:50.60% 
+   Accuracy in Train data:54.60%
+>> Steps:124000 Learning rate:0.00115 Cross entropy:1.59810 Regularization:0.10359
+   Accuracy:48.70% 
+   Accuracy in Train data:52.90%
+>> Steps:125000 Learning rate:0.00114 Cross entropy:1.60007 Regularization:0.10379
+   Accuracy:47.20% 
+   Accuracy in Train data:53.50%
+>> Steps:126000 Learning rate:0.00113 Cross entropy:1.49940 Regularization:0.10413
+   Accuracy:50.10% 
+   Accuracy in Train data:56.00%
+>> Steps:127000 Learning rate:0.00112 Cross entropy:1.41860 Regularization:0.10429
+   Accuracy:52.80% 
+   Accuracy in Train data:56.50%
+>> Steps:128000 Learning rate:0.00110 Cross entropy:1.46941 Regularization:0.10456
+   Accuracy:48.00% 
+   Accuracy in Train data:56.00%
+>> Steps:129000 Learning rate:0.00109 Cross entropy:1.47918 Regularization:0.10487
+   Accuracy:50.30% 
+   Accuracy in Train data:58.70%
+>> Steps:130000 Learning rate:0.00108 Cross entropy:1.47690 Regularization:0.10514
+   Accuracy:52.10% 
+   Accuracy in Train data:55.50%
+>> Steps:131000 Learning rate:0.00107 Cross entropy:1.50565 Regularization:0.10541
+   Accuracy:48.50% 
+   Accuracy in Train data:56.70%
+>> Steps:132000 Learning rate:0.00106 Cross entropy:1.49467 Regularization:0.10569
+   Accuracy:49.80% 
+   Accuracy in Train data:59.50%
+>> Steps:133000 Learning rate:0.00105 Cross entropy:1.62041 Regularization:0.10618
+   Accuracy:49.60% 
+   Accuracy in Train data:57.90%
+>> Steps:134000 Learning rate:0.00104 Cross entropy:1.50022 Regularization:0.10638
+   Accuracy:51.50% 
+   Accuracy in Train data:56.50%
+>> Steps:135000 Learning rate:0.00103 Cross entropy:1.46854 Regularization:0.10662
+   Accuracy:50.70% 
+   Accuracy in Train data:57.60%
+>> Steps:136000 Learning rate:0.00102 Cross entropy:1.45614 Regularization:0.10689
+   Accuracy:51.50% 
+   Accuracy in Train data:59.50%
+>> Steps:137000 Learning rate:0.00101 Cross entropy:1.45905 Regularization:0.10730
+   Accuracy:53.80% 
+   Accuracy in Train data:57.70%
+>> Steps:138000 Learning rate:0.00100 Cross entropy:1.39819 Regularization:0.10754
+   Accuracy:52.10% 
+   Accuracy in Train data:58.80%
+>> Steps:139000 Learning rate:0.00099 Cross entropy:1.45300 Regularization:0.10790
+   Accuracy:50.40% 
+   Accuracy in Train data:56.20%
+>> Steps:140000 Learning rate:0.00098 Cross entropy:1.54181 Regularization:0.10799
+   Accuracy:53.50% 
+   Accuracy in Train data:57.40%
+>> Steps:141000 Learning rate:0.00097 Cross entropy:1.47733 Regularization:0.10833
+   Accuracy:51.40% 
+   Accuracy in Train data:57.50%
+>> Steps:142000 Learning rate:0.00096 Cross entropy:1.52860 Regularization:0.10872
+   Accuracy:53.30% 
+   Accuracy in Train data:55.70%
+>> Steps:143000 Learning rate:0.00095 Cross entropy:1.44744 Regularization:0.10907
+   Accuracy:56.50% 
+   Accuracy in Train data:59.20%
+>> Steps:144000 Learning rate:0.00094 Cross entropy:1.55423 Regularization:0.10936
+   Accuracy:52.20% 
+   Accuracy in Train data:58.20%
+>> Steps:145000 Learning rate:0.00093 Cross entropy:1.47354 Regularization:0.10966
+   Accuracy:52.80% 
+   Accuracy in Train data:58.10%
+>> Steps:146000 Learning rate:0.00092 Cross entropy:1.46106 Regularization:0.10994
+   Accuracy:52.10% 
+   Accuracy in Train data:60.10%
+>> Steps:147000 Learning rate:0.00091 Cross entropy:1.49444 Regularization:0.11018
+   Accuracy:52.90% 
+   Accuracy in Train data:57.80%
+>> Steps:148000 Learning rate:0.00090 Cross entropy:1.46820 Regularization:0.11028
+   Accuracy:54.80% 
+   Accuracy in Train data:55.20%
+>> Steps:149000 Learning rate:0.00089 Cross entropy:1.46808 Regularization:0.11060
+   Accuracy:53.00% 
+   Accuracy in Train data:59.90%
+>> Steps:150000 Learning rate:0.00089 Cross entropy:1.43514 Regularization:0.11083
+   Accuracy:50.90% 
+   Accuracy in Train data:59.10%
+>> Steps:151000 Learning rate:0.00088 Cross entropy:1.42984 Regularization:0.11105
+   Accuracy:51.20% 
+   Accuracy in Train data:63.00%
+>> Steps:152000 Learning rate:0.00087 Cross entropy:1.51965 Regularization:0.11132
+   Accuracy:49.20% 
+   Accuracy in Train data:57.50%
+>> Steps:153000 Learning rate:0.00086 Cross entropy:1.38549 Regularization:0.11164
+   Accuracy:53.30% 
+   Accuracy in Train data:62.90%
+>> Steps:154000 Learning rate:0.00085 Cross entropy:1.44240 Regularization:0.11184
+   Accuracy:52.10% 
+   Accuracy in Train data:61.00%
+>> Steps:155000 Learning rate:0.00084 Cross entropy:1.45184 Regularization:0.11207
+   Accuracy:53.00% 
+   Accuracy in Train data:60.60%
+>> Steps:156000 Learning rate:0.00083 Cross entropy:1.57566 Regularization:0.11250
+   Accuracy:50.90% 
+   Accuracy in Train data:60.40%
+>> Steps:157000 Learning rate:0.00083 Cross entropy:1.49274 Regularization:0.11272
+   Accuracy:51.30% 
+   Accuracy in Train data:60.50%
+>> Steps:158000 Learning rate:0.00082 Cross entropy:1.54382 Regularization:0.11294
+   Accuracy:51.00% 
+   Accuracy in Train data:59.90%
+>> Steps:159000 Learning rate:0.00081 Cross entropy:1.48248 Regularization:0.11322
+   Accuracy:52.50% 
+   Accuracy in Train data:60.80%
+>> Steps:160000 Learning rate:0.00080 Cross entropy:1.44233 Regularization:0.11342
+   Accuracy:54.40% 
+   Accuracy in Train data:66.20%
+>> Steps:161000 Learning rate:0.00079 Cross entropy:1.45131 Regularization:0.11366
+   Accuracy:56.50% 
+   Accuracy in Train data:65.40%
+>> Steps:162000 Learning rate:0.00079 Cross entropy:1.43228 Regularization:0.11380
+   Accuracy:55.00% 
+   Accuracy in Train data:64.10%
+>> Steps:163000 Learning rate:0.00078 Cross entropy:1.40968 Regularization:0.11397
+   Accuracy:55.30% 
+   Accuracy in Train data:64.70%
+>> Steps:164000 Learning rate:0.00077 Cross entropy:1.43483 Regularization:0.11425
+   Accuracy:54.80% 
+   Accuracy in Train data:64.80%
+>> Steps:165000 Learning rate:0.00076 Cross entropy:1.36578 Regularization:0.11446
+   Accuracy:57.80% 
+   Accuracy in Train data:65.70%
+>> Steps:166000 Learning rate:0.00075 Cross entropy:1.34861 Regularization:0.11470
+   Accuracy:57.60% 
+   Accuracy in Train data:65.60%
+>> Steps:167000 Learning rate:0.00075 Cross entropy:1.37863 Regularization:0.11503
+   Accuracy:56.90% 
+   Accuracy in Train data:65.20%
+>> Steps:168000 Learning rate:0.00074 Cross entropy:1.38634 Regularization:0.11530
+   Accuracy:55.00% 
+   Accuracy in Train data:64.60%
+>> Steps:169000 Learning rate:0.00073 Cross entropy:1.39015 Regularization:0.11556
+   Accuracy:54.60% 
+   Accuracy in Train data:65.00%
+>> Steps:170000 Learning rate:0.00072 Cross entropy:1.56939 Regularization:0.11587
+   Accuracy:51.10% 
+   Accuracy in Train data:67.00%
+>> Steps:171000 Learning rate:0.00072 Cross entropy:1.61185 Regularization:0.11596
+   Accuracy:52.80% 
+   Accuracy in Train data:65.70%
+>> Steps:172000 Learning rate:0.00071 Cross entropy:1.48953 Regularization:0.11602
+   Accuracy:51.40% 
+   Accuracy in Train data:70.10%
+>> Steps:173000 Learning rate:0.00070 Cross entropy:1.46126 Regularization:0.11627
+   Accuracy:54.50% 
+   Accuracy in Train data:68.90%
+>> Steps:174000 Learning rate:0.00070 Cross entropy:1.51455 Regularization:0.11652
+   Accuracy:52.60% 
+   Accuracy in Train data:69.10%
+>> Steps:175000 Learning rate:0.00069 Cross entropy:1.36911 Regularization:0.11673
+   Accuracy:56.20% 
+   Accuracy in Train data:66.40%
+>> Steps:176000 Learning rate:0.00068 Cross entropy:1.33647 Regularization:0.11697
+   Accuracy:58.80% 
+   Accuracy in Train data:65.90%
+>> Steps:177000 Learning rate:0.00068 Cross entropy:1.32506 Regularization:0.11725
+   Accuracy:56.50% 
+   Accuracy in Train data:66.80%
+>> Steps:178000 Learning rate:0.00067 Cross entropy:1.35778 Regularization:0.11747
+   Accuracy:55.40% 
+   Accuracy in Train data:65.20%
+>> Steps:179000 Learning rate:0.00066 Cross entropy:1.35514 Regularization:0.11767
+   Accuracy:55.30% 
+   Accuracy in Train data:63.60%
+>> Steps:180000 Learning rate:0.00066 Cross entropy:1.52695 Regularization:0.11803
+   Accuracy:51.30% 
+   Accuracy in Train data:67.70%
+>> Steps:181000 Learning rate:0.00065 Cross entropy:1.50302 Regularization:0.11824
+   Accuracy:52.60% 
+   Accuracy in Train data:69.10%
+>> Steps:182000 Learning rate:0.00064 Cross entropy:1.47480 Regularization:0.11848
+   Accuracy:56.40% 
+   Accuracy in Train data:67.10%
+>> Steps:183000 Learning rate:0.00064 Cross entropy:1.46962 Regularization:0.11871
+   Accuracy:52.20% 
+   Accuracy in Train data:68.60%
+>> Steps:184000 Learning rate:0.00063 Cross entropy:1.45090 Regularization:0.11894
+   Accuracy:52.60% 
+   Accuracy in Train data:66.00%
+>> Steps:185000 Learning rate:0.00062 Cross entropy:1.52447 Regularization:0.11913
+   Accuracy:53.20% 
+   Accuracy in Train data:68.80%
+>> Steps:186000 Learning rate:0.00062 Cross entropy:1.48868 Regularization:0.11937
+   Accuracy:55.00% 
+   Accuracy in Train data:70.10%
+>> Steps:187000 Learning rate:0.00061 Cross entropy:1.53654 Regularization:0.11970
+   Accuracy:53.70% 
+   Accuracy in Train data:70.60%
+>> Steps:188000 Learning rate:0.00060 Cross entropy:1.52735 Regularization:0.11985
+   Accuracy:54.10% 
+   Accuracy in Train data:70.90%
+>> Steps:189000 Learning rate:0.00060 Cross entropy:1.63613 Regularization:0.12010
+   Accuracy:51.10% 
+   Accuracy in Train data:67.70%
+>> Steps:190000 Learning rate:0.00059 Cross entropy:1.41034 Regularization:0.12036
+   Accuracy:55.70% 
+   Accuracy in Train data:68.80%
+>> Steps:191000 Learning rate:0.00059 Cross entropy:1.46348 Regularization:0.12067
+   Accuracy:55.00% 
+   Accuracy in Train data:65.80%
+>> Steps:192000 Learning rate:0.00058 Cross entropy:1.42824 Regularization:0.12089
+   Accuracy:55.80% 
+   Accuracy in Train data:69.70%
+>> Steps:193000 Learning rate:0.00057 Cross entropy:1.52513 Regularization:0.12113
+   Accuracy:53.60% 
+   Accuracy in Train data:69.30%
+>> Steps:194000 Learning rate:0.00057 Cross entropy:1.41383 Regularization:0.12133
+   Accuracy:54.60% 
+   Accuracy in Train data:71.80%
+>> Steps:195000 Learning rate:0.00056 Cross entropy:1.57024 Regularization:0.12160
+   Accuracy:54.70% 
+   Accuracy in Train data:73.10%
+>> Steps:196000 Learning rate:0.00056 Cross entropy:1.60609 Regularization:0.12179
+   Accuracy:50.80% 
+   Accuracy in Train data:66.20%
+>> Steps:197000 Learning rate:0.00055 Cross entropy:1.59089 Regularization:0.12210
+   Accuracy:52.00% 
+   Accuracy in Train data:70.40%
+>> Steps:198000 Learning rate:0.00055 Cross entropy:1.51295 Regularization:0.12221
+   Accuracy:55.30% 
+   Accuracy in Train data:71.40%
+>> Steps:199000 Learning rate:0.00054 Cross entropy:1.51014 Regularization:0.12246
+   Accuracy:53.90% 
+   Accuracy in Train data:70.50%
+===================================
+Save?(y/n): y
+===================================
+Terminated
