@@ -8,7 +8,7 @@ import random
 import time
 
 BATCH_SIZE=50
-TRAINING_STEPS=100000
+TRAINING_STEPS=20000
 DATASET_FOLDER='./dataset/'
 #检测频率
 CHECK_FREQUNCY=1000
@@ -16,13 +16,14 @@ ACCURACY_TEST_DATA_UPDATE_FREQUENCY=5
 ACCURACY_TEST_BATCHSIZE=400
 #学习率设置
 LEARNING_RATE_BASE=0.0005
-LEARNING_RATE_DECAY_RATE=0.99
+LEARNING_RATE_DECAY_RATE=0.995
 LEARNING_RATE_DECAY_STEP=100
 #正则化比率
 #REGULARIZATION_RATE=0.001
-REGULARIZATION_RATE=0.00001
+REGULARIZATION_RATE=0.0000001
+#REGULARIZATION_RATE=0.000005
 
-DROPOUT_FORWARD_NETWORK=0.9
+DROPOUT_FORWARD_NETWORK=0.7
 
 IMAGE_SIZE=[32,32,3]
 #层1 卷积层
@@ -212,6 +213,7 @@ accuracy=tf.reduce_mean(tf.cast(crrect_prediction,tf.float64))
 saver=tf.train.Saver()
 
 with tf.Session() as sess:
+    writer=tf.summary.FileWriter("./log",tf.get_default_graph())
     print("=====================INFO====================")
     print(\
     "Learning rate base:{lrb}\n"\
@@ -256,7 +258,16 @@ with tf.Session() as sess:
             accuracy_test_count-=1
             #print("Training step:",i,'Accuracy:',sess.run(accuracy,feed_dict=feed),sess.run(loss,feed_dict=feed),sess.run(learning_rate),answer(sess.run(y,feed_dict=feed)[0]),answer(sess.run(y_,feed_dict=feed)[0]))
             #print("Steps:",i,'Accuracy:',"%.1f" % sess.run(accuracy,feed_dict=accuracy_test_dict),'Learning rate:',sess.run(learning_rate),sess.run(regularization,feed_dict=accuracy_test_dict),sess.run(cross_entropy,feed_dict=accuracy_test_dict))
-            print(OUTPUT_FORMAT_STRING.format(step=i,acc=sess.run(accuracy,feed_dict=accuracy_test_dict),lr=sess.run(learning_rate),ce=sess.run(cross_entropy,feed_dict=accuracy_test_dict),re=sess.run(regularization,feed_dict=accuracy_test_dict),accit=sess.run(accuracy,feed_dict=accuracy_test_train_dict),srlt=sess.run(label_sampel,feed_dict=accuracy_test_dict)),sess.run(label_to_num,feed_dict=accuracy_test_dict),sess.run(label__to_num,feed_dict=accuracy_test_dict))
+            print(OUTPUT_FORMAT_STRING.format(\
+                step=i,\
+                acc=sess.run(accuracy,feed_dict=accuracy_test_dict),\
+                lr=sess.run(learning_rate),\
+                ce=sess.run(cross_entropy,feed_dict=accuracy_test_dict),\
+                re=sess.run(regularization,feed_dict=accuracy_test_dict),\
+                accit=sess.run(accuracy,feed_dict=accuracy_test_train_dict),\
+                srlt=sess.run(label_sampel,feed_dict=accuracy_test_dict)),\
+                sess.run(label_to_num,feed_dict=accuracy_test_dict),\
+                sess.run(label__to_num,feed_dict=accuracy_test_dict))
     writer=tf.summary.FileWriter("./log",tf.get_default_graph())
     writer.close()
     print("===================================")
