@@ -26,7 +26,7 @@ def CNN_Interface(data,Layers,lineshape=True,bias=True,order=0,stddev=0.1,const_
                 if bias==True:
                     #偏置项
                     cnn_bias=tf.get_variable("conv{layer_order}_biase".format(layer_order=layer_order),shape=[layer[1][3]],initializer=tf.constant_initializer(const_init))
-                    tf.summary.histogram("conv{layer_order}_filter".format(layer_order=layer_order), cnn_bias)
+                    tf.summary.histogram("conv{layer_order}_bias".format(layer_order=layer_order), cnn_bias)
                     temp_bias=tf.nn.bias_add(temp_layer,cnn_bias)
                     hidden_layer=tf.nn.relu(temp_bias)
                 else:
@@ -43,8 +43,8 @@ def CNN_Interface(data,Layers,lineshape=True,bias=True,order=0,stddev=0.1,const_
         return hidden_layer
 
 def FC_Interface(data,Layer,order=0,keep_prob_layer=1,keep_prob_image=1,stddev=0.1,const_init=0.0):
-    #建立权重
     with tf.variable_scope("Fully_Lincked_Networks_{order}".format(order=order)):
+        #建立权重
         weight=[]
         bias=[]
         for i in range(len(Layer)-1):
@@ -53,20 +53,39 @@ def FC_Interface(data,Layer,order=0,keep_prob_layer=1,keep_prob_image=1,stddev=0
             #加入到集合以供计算正则化
             tf.add_to_collection("fc_weight",weight[i])
             #添加到Tensorboard
-            tf.summary.histogram("fc{layer_order}_filter".format(layer_order=i), weight[i])
+            tf.summary.histogram("fc{layer_order}_weight".format(layer_order=i), weight[i])
             #tf.summary.histogram("fc{layer_order}_bias".format(layer_order=i), bias[i])
-    #计算
-    data=tf.nn.dropout(data,keep_prob=keep_prob_image)
-    for i in range(len(Layer)-1):
-        if i==0:
-            result=tf.nn.relu(tf.matmul(data,weight[i]))
-        else:
-            result_droped=tf.nn.dropout(result,keep_prob=keep_prob_layer)
-            result=tf.nn.relu(tf.matmul(result_droped,weight[i]))
+        #计算
+        data=tf.nn.dropout(data,keep_prob=keep_prob_image)
+        for i in range(len(Layer)-1):
+            if i==0:
+                result=tf.nn.relu(tf.matmul(data,weight[i]))
+            else:
+                result_droped=tf.nn.dropout(result,keep_prob=keep_prob_layer)
+                result=tf.nn.relu(tf.matmul(result_droped,weight[i]))
     return result
+
+def Matedata_Writer(writer,feed_dict,train_op,step,checkfreq=1,sess="default",name="step{global_step}"):
+    '''
+    用于写入运行时的资源占用等源数据
+    需要传入：已经定义好的Writer，测试运行时间用的feed_dict，训练操作train_op，当前训练轮数
+    检查频率标志了多少次step时进行一次记录
+    可利用name自定义当前次训练的命名
+    '''
+    if step%checkfreq != 0:
+        return
+    if sess=="default":
+        sess=tf.get_default_session()
+    summary = tf.summary.merge_all()
+    runop=tf.RunOptions(trace_level=3)
+    runme=tf.RunMetadata()
+    summary_ , _ =sess.run([summary,train_op],feed_dict=feed_dict,run_metadata=runme,options=runop)
+    writer.add_run_metadata(runme,name.format(global_step=step))
+    writer.add_summary(summary_,step)
 
 
 if __name__ == "__main__":
+    
     print("=========================")
     import random
     import numpy as np
@@ -74,10 +93,20 @@ if __name__ == "__main__":
         ["conv",[5,5,3,8],[1,1,1,1],True,"SAME"],
         ["pool",[1,2,2,1],[1,2,2,1]],
         ["conv",[5,5,8,32],[1,1,1,1],True,"SAME"],
+        ["conv",[5,5,32,32],[1,1,1,1],True,"SAME"],
+        ["conv",[5,5,32,32],[1,1,1,1],True,"SAME"],
+        ["conv",[5,5,32,32],[1,1,1,1],True,"SAME"],
+        ["conv",[5,5,32,32],[1,1,1,1],True,"SAME"],
+        ["conv",[5,5,32,32],[1,1,1,1],True,"SAME"],
+        ["conv",[5,5,32,32],[1,1,1,1],True,"SAME"],
+        ["conv",[5,5,32,32],[1,1,1,1],True,"SAME"],
+        ["conv",[5,5,32,32],[1,1,1,1],True,"SAME"],
+        ["conv",[5,5,32,32],[1,1,1,1],True,"SAME"],
+        ["conv",[5,5,32,32],[1,1,1,1],True,"SAME"],
         ["pool",[1,2,2,1],[1,2,2,1]],
     ]
     
-    image=tf.Variable(tf.random_normal([5,32,32,3],mean=1.0))
+    image=tf.Variable(tf.random_normal([1000,32,32,3],mean=1.0))
     print(image)
     result,index=CNN_Interface(image,TEST_LAYERS)
     print(result.shape)
@@ -86,5 +115,12 @@ if __name__ == "__main__":
     print(fcout.shape)
     print("=========================")
     with tf.Session() as sess:
+        
         sess.run(tf.global_variables_initializer())
         print(sess.run(result))
+        writer=tf.summary.FileWriter("./log",tf.get_default_graph())
+        Matedata_Writer(writer,image,fcout,1)
+        
+
+
+        

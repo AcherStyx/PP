@@ -13,7 +13,7 @@ BATCH_SIZE=5
 TRAINING_STEPS=20000
 DATASET_FOLDER='./dataset/'
 #检测频率
-CHECK_FREQUNCY=100
+CHECK_FREQUNCY=1000
 ACCURACY_TEST_DATA_UPDATE_FREQUENCY=5
 ACCURACY_TEST_BATCHSIZE=400
 #学习率设置
@@ -28,22 +28,9 @@ REGULARIZATION_RATE=0.00000000001
 DROPOUT_FORWARD_NETWORK=1
 
 IMAGE_SIZE=[32,32,3]
-#层1 卷积层
-LAYER1_FILTER_SIZE=[5,5,3,8]
-LAYER1_BIASE_SIZE=[LAYER1_FILTER_SIZE[3]]
-LAYER1_STRIDES=[1,1,1,1]
-#层2 池化层
-LAYER2_FILTER_SIZE=[1,2,2,1]
-LAYER2_STRIDES=[1,2,2,1]    
-#层3 卷积层
-LAYER3_FILTER_SIZE=[5,5,8,32]
-LAYER3_BIASE_SIZE=[LAYER3_FILTER_SIZE[3]]
-LAYER3_STRIDES=[1,1,1,1]
-#层4 池化层
-LAYER4_FILTER_SIZE=[1,2,2,1]
-LAYER4_STRIDES=[1,2,2,1]
+
 #层1-? 全连接层
-Layer=[128,500,10]
+Layer=[128,512,128,64,10]
 #总计训练次数
 global_step=tf.Variable(0,trainable=False)
 
@@ -60,7 +47,6 @@ CNN_LAYERS=[
 
 #输出格式串
 OUTPUT_FORMAT_STRING=">> Steps:{step: <5} Learning rate:{lr:.10f} Cross entropy:{ce:.5f} Regularization:{re:.5f}\n   Accuracy:{acc:.2%} \n   Accuracy in Train data:{accit:.2%}\n{srlt}"
-
 
 #数据集读取
 class CIFAR10:
@@ -142,32 +128,13 @@ class CIFAR10:
             self.Test['image'] , self.Test['label'] = self.__load_CIFAR_batch(os.path.join(ROOT, 'test_batch'))
             self.Test_Size=10000
 
-#全连接神经网络
-def Forward_network_interface(data,Layer,keep_prob=1):
-    #建立权重
-    with tf.variable_scope("Layer{Layer}_{Type}".format(Layer=5,Type="fulllink")):
-        weight=[]
-        for i in range(len(Layer)-1):
-            weight.append(tf.Variable(tf.random_normal(shape=[Layer[i],Layer[i+1]],stddev=0.01,dtype=tf.float32)))
-            tf.add_to_collection("fc_weight",weight[i])
-    #计算
-#    data_droped=tf.nn.dropout(data,keep_prob=DROPOUT_IMAGE)
-    depth=len(Layer)
-    for i in range(depth-1):
-        if i==0:
-            result=tf.nn.relu(tf.matmul(data,weight[i]))
-        else:
-            result_droped=tf.nn.dropout(result,keep_prob=DROPOUT_FORWARD_NETWORK)
-            result=tf.nn.relu(tf.matmul(result_droped,weight[i]))
-    return result
-
 keep_prob_holder=tf.placeholder(tf.float32)
 image=tf.placeholder(tf.float32,shape=[None]+IMAGE_SIZE,name='image')
 label_=tf.placeholder(tf.float32,shape=[None,Layer[-1]],name='label_')
 
-line_shape_result,len_shape_length=net.CNN_Interface(image,CNN_LAYERS)
+line_shape_result,len_shape_length=net.CNN_Interface(image,CNN_LAYERS,bias=False)
 Layer[0]=len_shape_length
-label=Forward_network_interface(line_shape_result,Layer,keep_prob=keep_prob_holder)
+label=net.FC_Interface(line_shape_result,Layer,keep_prob_layer=keep_prob_holder)
 
 label_to_num=tf.argmax(label,1)[0]
 label__to_num=tf.argmax(label_,1)[0]
@@ -199,7 +166,6 @@ saver=tf.train.Saver()
 with tf.Session() as sess:
     summaries = tf.summary.merge_all()
     writer=tf.summary.FileWriter("./log",tf.get_default_graph())
-    summaries = tf.summary.merge_all()
     print("=====================INFO====================")
     print(\
     "Learning rate base:{lrb}\n"\
@@ -257,6 +223,7 @@ with tf.Session() as sess:
             #写Tensorboard信息
             summ = sess.run(summaries, feed_dict=accuracy_test_dict)
             writer.add_summary(summ, global_step=i)
+            net.Matedata_Writer(writer,accuracy_test_train_dict,train_step,i)
     writer.close()
     print("===================================")
     reply=input('Save?(y/n): ')
