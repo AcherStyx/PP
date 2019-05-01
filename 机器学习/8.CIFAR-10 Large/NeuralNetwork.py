@@ -124,7 +124,7 @@ def Softmax_Cross_Encropy_With_Regularization(label,logits,regularization_rate=0
 
 def Info_Printer(learning_rate_base=None,learning_rate_decay_rate=None,learning_rate_decay_step=None,regularization_rate=None,keep_prob_layer=None,keep_prob_image=None):
     if learning_rate_base!=None:
-        print("Learning rate base:{lrb}".format(lrb=learning_rate_base))
+        print("Learning rate base:{lrb:.10f}".format(lrb=learning_rate_base))
     if learning_rate_decay_rate!=None:
         print("Learning rate decay rate:{lrdr}".format(lrdr=learning_rate_decay_rate))
     if learning_rate_decay_step!=None:
@@ -136,7 +136,7 @@ def Info_Printer(learning_rate_base=None,learning_rate_decay_rate=None,learning_
     if keep_prob_image!=None:
         print("Keep prob image:{drop}".format(drop=keep_prob_image))
 
-def Learning_Rate_Search(lr_tf_variable,train_op,accuracy_test_op,dataset,lr_base,lr_upper_bond=1,lr_raise_rate=1.5,train_step=5000,train_batch_size=1,test_batch_size=500,show_graphe=True,print_data=False,sess="default"):
+def Learning_Rate_Search(lr_tf_variable,train_op,accuracy_test_op,dataset,lr_base,lr_upper_bond=1,lr_raise_rate=1.5,train_step=5000,train_batch_size=1,test_batch_size=500,show_graphe=True,print_data=False,sess="default",restore=False):
     if lr_base>lr_upper_bond:
         return
     if sess=="default":
@@ -146,7 +146,11 @@ def Learning_Rate_Search(lr_tf_variable,train_op,accuracy_test_op,dataset,lr_bas
     feed_dict_test=dataset.nextbatch(test_batch_size,type="Test")
     try:
         while(1):
-            sess.run(tf.global_variables_initializer())
+            if restore==False:
+                sess.run(tf.global_variables_initializer())
+            else:
+                saver=tf.train.Saver()
+                saver.restore(sess,restore)
             update_lr=tf.assign(lr_tf_variable,lr_base)
             sess.run(update_lr)
             for step in range(train_step):

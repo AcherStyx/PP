@@ -10,16 +10,16 @@ import time
 
 import NeuralNetwork as net
 
-BATCH_SIZE=5
-TRAINING_STEPS=1000000
+BATCH_SIZE=10
+TRAINING_STEPS=200000
 DATASET_FOLDER='./dataset/'
 #检测频率
 CHECK_FREQUNCY=1000
 ACCURACY_TEST_DATA_UPDATE_FREQUENCY=5
-ACCURACY_TEST_BATCHSIZE=400
+ACCURACY_TEST_BATCHSIZE=2000
 #学习率设置
 LEARNING_RATE_BASE=tf.Variable(0.0001)
-LEARNING_RATE_DECAY_RATE=0.99
+LEARNING_RATE_DECAY_RATE=0.98
 LEARNING_RATE_DECAY_STEP=1000
 #正则化比率
 #REGULARIZATION_RATE=0.001
@@ -152,8 +152,9 @@ tf.summary.scalar("Accuracy",accuracy)
 saver=tf.train.Saver()
 
 with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
     print("=====================INFO====================")
-    net.Info_Printer(learning_rate_base=LEARNING_RATE_BASE,
+    net.Info_Printer(learning_rate_base=sess.run(LEARNING_RATE_BASE),
     learning_rate_decay_rate=LEARNING_RATE_DECAY_RATE,
     learning_rate_decay_step=LEARNING_RATE_DECAY_STEP,
     regularization_rate=REGULARIZATION_RATE,
@@ -165,17 +166,18 @@ with tf.Session() as sess:
     timer.getinput()
     print("====================LOAD=====================")
     #初始化
-    reply=input('Load model?(y/n): ')
-    if reply=='y':
+    reply_load=input('Load model?(y/n): ')
+    if reply_load=='y':
         saver.restore(sess,'./Tensorflow_model/model.ckpt')
-    else:
-        sess.run(tf.global_variables_initializer())
     print("==============TRY LEARNING RATE==============")
     reply=input("Try Learning rate?(y/n): ")
     print("=================INPUT DATA==================")
     dataset=CIFAR10(DATASET_FOLDER)
     if reply=="y":
-        net.Learning_Rate_Search(LEARNING_RATE_BASE,train_step,accuracy,dataset,1e-5,lr_upper_bond=0.01,print_data=True,train_step=2000)
+        if reply_load=='y':
+            net.Learning_Rate_Search(LEARNING_RATE_BASE,train_step,accuracy,dataset,1e-6,lr_upper_bond=0.0001,lr_raise_rate=1.2,print_data=True,train_step=5000,restore='./Tensorflow_model/model.ckpt')
+        else:
+            net.Learning_Rate_Search(LEARNING_RATE_BASE,train_step,accuracy,dataset,1e-6,lr_upper_bond=0.0001,lr_raise_rate=1.2,print_data=True,train_step=5000)
         reply=input("Input a new learning rate: ")
         sess.run(tf.global_variables_initializer())
         new_lr=tf.assign(LEARNING_RATE_BASE,float(reply))
@@ -186,15 +188,15 @@ with tf.Session() as sess:
     print("===================RESULT====================")
     accuracy_test_count=0
     time_start=time.time()
-#    lr_manual=tf.assign(LEARNING_RATE_BASE,0.0005)
-#    sess.run(lr_manual)
-    for i in range(TRAINING_STEPS):
-        i=i
+    lr_manual=tf.assign(LEARNING_RATE_BASE,1e-05)
+    sess.run(lr_manual)
+    for i in range(TRAINING_STEPS): 
+        i=i+200000
         try:
             #计时器
             if timer.check==1:
                 break
-            #训练
+            #训练a
             feed_dict_train=dataset.nextbatch(BATCH_SIZE)
             sess.run(train_step,feed_dict=feed_dict_train)
             #测试
@@ -222,7 +224,7 @@ with tf.Session() as sess:
                 net.Matedata_Writer(writer,accuracy_test_train_dict,train_step,i)
         except KeyboardInterrupt:
             new_lr=input("New learning rate(-1 to quit): ")
-            if new_lr>0:
+            if float(new_lr)>0:
                 try:
                     change_lr=tf.assign(LEARNING_RATE_BASE,float(new_lr))
                     sess.run(change_lr)
