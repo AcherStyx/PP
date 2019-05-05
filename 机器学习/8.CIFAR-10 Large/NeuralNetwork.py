@@ -2,8 +2,9 @@ import tensorflow as tf
 import time
 import matplotlib.pyplot as plt
 import numpy as np
+import math
 
-def CNN_Interface(data,Layers,lineshape=True,bias=True,order=0,stddev=0.1,const_init=0.0,active_function=tf.nn.tanh):
+def CNN_Interface(data,Layers,lineshape=True,bias=True,order=0,stddev=0.1,const_init=0.0,active_function=tf.nn.tanh,output_each_layer=False):
     '''
     传入初始的数据，以及按格式创建的各个层的参数，就可以完成卷积层和池化层的创建
     Layers示例:
@@ -20,6 +21,8 @@ def CNN_Interface(data,Layers,lineshape=True,bias=True,order=0,stddev=0.1,const_
     '''
     hidden_layer=data
     with tf.variable_scope("Convolutional_Neural_Networks_{order}".format(order=order)):
+        if output_each_layer==True:
+            tf.summary.image("CNN_Input",hidden_layer,max_outputs=1)
         for layer_order,layer in enumerate(Layers):
             if layer[0]=="conv":
                 #过滤器
@@ -40,17 +43,24 @@ def CNN_Interface(data,Layers,lineshape=True,bias=True,order=0,stddev=0.1,const_
             elif layer[0]=="avgpool":
                 temp_layer=tf.nn.avg_pool(hidden_layer,ksize=layer[1],strides=layer[2],padding="SAME")
                 hidden_layer=active_function(temp_layer)
+            elif layer[0]=="dropout":
+                temp_layer=tf.nn.dropout(hidden_layer,layer[1])
+                hidden_layer=temp_layer
             else:
                 raise(ValueError)
-    if lineshape==True:
-        pool_shape=hidden_layer.get_shape().as_list()
-        nodes=pool_shape[1]*pool_shape[2]*pool_shape[3]
-        reshaped=tf.reshape(hidden_layer,[-1,nodes],name='reshaped')
-        return reshaped,nodes
-    else:
-        return hidden_layer
+            
+            if output_each_layer==True:
+                tf.summary.image("CNN_Layer_{ord}".format(ord=layer_order),hidden_layer[:,:,:,:1],max_outputs=1)
+        
+        if lineshape==True:
+            pool_shape=hidden_layer.get_shape().as_list()
+            nodes=pool_shape[1]*pool_shape[2]*pool_shape[3]
+            reshaped=tf.reshape(hidden_layer,[-1,nodes],name='reshaped')
+            return reshaped,nodes
+        else:
+            return hidden_layer
 
-def FC_Interface(data,Layer,order=0,keep_prob_layer=1,keep_prob_image=1,stddev=0.1,const_init=0.0):
+def FC_Interface(data,Layer,order=0,keep_prob_layer=1,keep_prob_image=1,stddev=0.1,const_init=0.0,active_function=tf.nn.relu):
     '''
     自动创建全连接层
     Layer示例：
@@ -65,7 +75,7 @@ def FC_Interface(data,Layer,order=0,keep_prob_layer=1,keep_prob_image=1,stddev=0
         bias=[]
         for i in range(len(Layer)-1):
             weight.append(tf.get_variable("fc{layer_order}_weight".format(layer_order=i),shape=[Layer[i],Layer[i+1]],initializer=tf.random_normal_initializer(stddev=stddev)))
-            bias.append(tf.get_variable("fc{layer_order}_bias".format(layer_order=i),shape=[Layer[i+1]],initializer=tf.constant_initializer(const_init)))
+            #bias.append(tf.get_variable("fc{layer_order}_bias".format(layer_order=i),shape=[Layer[i+1]],initializer=tf.constant_initializer(const_init)))
             #加入到集合以供计算正则化
             tf.add_to_collection("fc_weight",weight[i])
             #添加到Tensorboard
@@ -75,10 +85,13 @@ def FC_Interface(data,Layer,order=0,keep_prob_layer=1,keep_prob_image=1,stddev=0
         data=tf.nn.dropout(data,keep_prob=keep_prob_image)
         for i in range(len(Layer)-1):
             if i==0:
-                result=tf.nn.tanh(tf.matmul(data,weight[i]))
+                result=active_function(tf.matmul(data,weight[i]))
             else:
                 result_droped=tf.nn.dropout(result,keep_prob=keep_prob_layer)
-                result=tf.nn.tanh(tf.matmul(result_droped,weight[i]))
+                if not i==(len(Layer)-2):
+                    result=active_function(tf.matmul(result_droped,weight[i]))
+                else:
+                    result=tf.matmul(result_droped,weight[i])
     return result
 
 def Matedata_Writer(writer,feed_dict,train_op,step,checkfreq=1,sess="default",name="step{global_step}"):
@@ -124,7 +137,7 @@ def Softmax_Cross_Encropy_With_Regularization(label,logits,regularization_rate=0
 
 def Info_Printer(learning_rate_base=None,learning_rate_decay_rate=None,learning_rate_decay_step=None,regularization_rate=None,keep_prob_layer=None,keep_prob_image=None):
     if learning_rate_base!=None:
-        print("Learning rate base:{lrb:.10f}".format(lrb=learning_rate_base))
+        print("Learning rate base:{lrb}".format(lrb=learning_rate_base))
     if learning_rate_decay_rate!=None:
         print("Learning rate decay rate:{lrdr}".format(lrdr=learning_rate_decay_rate))
     if learning_rate_decay_step!=None:
@@ -136,35 +149,48 @@ def Info_Printer(learning_rate_base=None,learning_rate_decay_rate=None,learning_
     if keep_prob_image!=None:
         print("Keep prob image:{drop}".format(drop=keep_prob_image))
 
-def Learning_Rate_Search(lr_tf_variable,train_op,accuracy_test_op,dataset,lr_base,lr_upper_bond=1,lr_raise_rate=1.5,train_step=5000,train_batch_size=1,test_batch_size=500,show_graphe=True,print_data=False,sess="default",restore=False):
-    if lr_base>lr_upper_bond:
-        return
-    if sess=="default":
-        sess=tf.get_default_session()
-    lr_plotline=[]
-    lr_plotaxis=[]
-    feed_dict_test=dataset.nextbatch(test_batch_size,type="Test")
-    try:
+def Learning_Rate_Search(lr_tf_variable,train_op,aim_test_op,dataset,lr_base,lr_upper_bond=1,lr_raise_rate=2,train_step=5000,train_batch_size=5,test_batch_size=2000,show_graphe=True,print_data=False,sess="default",restore=False):
+    with tf.variable_scope("Learning_Rate_Search"):
+        if lr_base>lr_upper_bond:
+            return
+        if sess=="default":
+            sess=tf.get_default_session()
+        lr_plotline=[]
+        lr_plotaxis=[]
+        feed_dict_test=dataset.nextbatch(test_batch_size,type="Test")
         while(1):
-            if restore==False:
-                sess.run(tf.global_variables_initializer())
-            else:
-                saver=tf.train.Saver()
-                saver.restore(sess,restore)
-            update_lr=tf.assign(lr_tf_variable,lr_base)
-            sess.run(update_lr)
-            for step in range(train_step):
-                feed_dict_train=dataset.nextbatch(train_batch_size)
-                sess.run(train_op,feed_dict=feed_dict_train)
-            lr_plotline.append(sess.run(accuracy_test_op,feed_dict=feed_dict_test))
-            print(lr_plotline[-1],sess.run(lr_tf_variable))
-            lr_plotaxis.append(lr_base)
-            if lr_base > lr_upper_bond:
-                break
-            lr_base=lr_base*lr_raise_rate
-    except KeyboardInterrupt:
-        pass
+            try:
+                if restore==False:
+                    sess.run(tf.global_variables_initializer())
+                else:
+                    saver=tf.train.Saver()
+                    saver.restore(sess,restore)
+                update_lr=tf.assign(lr_tf_variable,lr_base)
+                sess.run(update_lr)
 
+                for step in range(train_step):
+                    feed_dict_train=dataset.nextbatch(train_batch_size)
+                    sess.run(train_op,feed_dict=feed_dict_train)
+
+                acc=sess.run(aim_test_op,feed_dict=feed_dict_test)
+                
+                lr_plotline.append(acc)
+                if print_data==True:
+                    print(lr_plotline[-1],sess.run(lr_tf_variable))
+                lr_plotaxis.append(lr_base)
+                if lr_base > lr_upper_bond:
+                    break
+                lr_base=lr_base*lr_raise_rate
+            except KeyboardInterrupt:
+                bar("New Test Case")
+                interrupt_change=input("New lr base:")
+                try:
+                    lr_base=float(interrupt_change)
+                except Exception as e:
+                    print(e)
+                    print("Failed")
+                bar("New Test Case")
+                
     if show_graphe==True:
         x=np.array(lr_plotaxis)
         x=np.log10(x)
@@ -187,14 +213,16 @@ class TrainTimer():
     start_time=0
     def __init__(self,timelimit=-1):
         self.limit=timelimit
-    def setting(self):
+    def setting(self,timelimit=-1):
+        if timelimit!=-1:
+            self.limit=timelimit
         self.start_time=time.time()
     def check(self):
         time_check=time.time()
         if (time_check-self.start_time) > self.limit | self.limit!=-1:
-            return 1
+            return False
         else:
-            return 0
+            return True
     def getinput(self):
         reply=input('Set time limit(s, unlimited: -1): ')
         try:
@@ -202,9 +230,15 @@ class TrainTimer():
         except ValueError:
             self.limit=-1
 
+def bar(string="",length=40,with_fram=False):
+        strlength=len(string)
+        if with_fram==True:
+            print("="*length)
+        print("="*int((length-strlength)/2)+string+"="*int(length-strlength-(length-strlength)/2))
+        if with_fram==True:
+            print("="*length)
 
 if __name__ == "__main__":
-    print("=========================")
     import random
     import numpy as np
     TEST_LAYERS=[
@@ -215,22 +249,28 @@ if __name__ == "__main__":
         ["conv",[5,5,32,64],[1,1,1,1],0.01,"SAME",True],
         ["avgpool",[1,3,3,1],[1,2,2,1]],
     ]
-    
     image=tf.Variable(tf.random_normal([1000,32,32,3],mean=1.0))
-    print(image)
-    
     result,index=CNN_Interface(image,TEST_LAYERS)
-    print(result.shape)
     FC_LAYER=[index,100,10]
     fcout=FC_Interface(result,FC_LAYER)
-    print(fcout.shape)
-    print("=========================")
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
+        bar("Image Shape")
+        print(image.shape)
+        bar("CNN Network Output Shape")
+        print(result.shape)
+        bar("FC Network Output Shape")
+        print(fcout.shape)
+        bar("Network Output")
         print(sess.run(result))
-        writer=tf.summary.FileWriter("./log",tf.get_default_graph())
+        bar("Summary Writer Check")
+        writer=tf.summary.FileWriter("./log/NeuralNetworkDebug",tf.get_default_graph())
         Matedata_Writer(writer,{},fcout,1)
-        
-
-
-        
+    bar("Info Printer Check")
+    Info_Printer(learning_rate_base=0.2)
+    bar("Timer Check")
+    timer=TrainTimer(2)
+    timer.setting()
+    while timer.check():
+        pass
+    bar("Timer Check Exit")
