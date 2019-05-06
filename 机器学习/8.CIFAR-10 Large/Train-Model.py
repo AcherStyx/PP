@@ -10,31 +10,31 @@ import time
 
 import NeuralNetwork as net
 
-BATCH_SIZE=2
-TURN=0
-TRAINING_STEPS=200000
+BATCH_SIZE=32
+TURN=1
+TRAINING_STEPS=800000
 DATASET_FOLDER='./dataset/'
 #检测频率
-CHECK_FREQUNCY=500
+CHECK_FREQUNCY=5000
 ACCURACY_TEST_DATA_UPDATE_FREQUENCY=1
-ACCURACY_TEST_BATCHSIZE=400
+ACCURACY_TEST_BATCHSIZE=800
 #学习率设置
-LEARNING_RATE_BASE=1.02839185e-05
+LEARNING_RATE_BASE=1.5e-05
 LEARNING_RATE_DECAY_RATE=0.99
-LEARNING_RATE_DECAY_STEP=5000
+LEARNING_RATE_DECAY_STEP=10000
 #正则化比率
 #REGULARIZATION_RATE=0.001
-REGULARIZATION_RATE=0.0001
+REGULARIZATION_RATE=0.01
 #REGULARIZATION_RATE=0.000005
 
-DROPOUT_CNN_NETWORK=0.9
+DROPOUT_CNN_NETWORK=0.6
 
 IMAGE_SIZE=[32,32,3]
 #层1-? 全连接层
 Layer=[0,512,128,10]
 
 #输出格式串
-OUTPUT_FORMAT_STRING=">> Steps:{step: <5} Learning rate:{lr:.10f}\n   Cross entropy:{ce:.25f} Regularization:{re:.5f}\n   Accuracy:{acc:.2%} \n   Accuracy in Train data:{accit:.2%}\n{srlt}"
+OUTPUT_FORMAT_STRING=">> Steps:{step: <5} Learning rate:{lr:.10f}\n   Cross entropy:{ce:.20f} Regularization:{re:.10f}\n   Accuracy:{acc:.2%} \n   Accuracy in Train data:{accit:.2%}\n{srlt}"
 
 #数据集读取
 class CIFAR10:
@@ -162,7 +162,7 @@ with tf.variable_scope("Train_Model"):
     #学习率指数衰减
     learning_rate=tf.train.exponential_decay(LEARNING_RATE_BASE,global_step,LEARNING_RATE_DECAY_STEP,LEARNING_RATE_DECAY_RATE)
     #损失
-    loss,cross_entropy,regularization=net.Softmax_Cross_Encropy_With_Regularization(label_,label,REGULARIZATION_RATE)
+    loss,cross_entropy,regularization=net.Softmax_Cross_Encropy_With_Regularization(label_,label,REGULARIZATION_RATE,collections=["fc_weight"])
     #训练
     train_step=tf.train.AdamOptimizer(learning_rate).minimize(loss,global_step=global_step)
 
@@ -217,7 +217,8 @@ with tf.Session() as sess:
     #sess.run(lr_manual)
     for i in range(TRAINING_STEPS): 
         try:
-            i=i+TURN*TRAINING_STEPS
+            #i=i+TURN*TRAINING_STEPS
+            i=i+1000000
             #计时器
             if timer.check==1:
                 break
