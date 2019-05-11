@@ -10,6 +10,7 @@
 
 # MNIST
 *.idx3-ubyte
+*.idx1-ubyte
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
