@@ -1,8 +1,17 @@
 import numpy as np 
 import matplotlib.pyplot as plt
 import random as rd
+import sys 
+sys.setrecursionlimit(1000000000)
 
 class map:
+    '''
+    states:
+    0 空节点
+    1 障碍
+    5 起点、终点
+
+    '''
     map=[]
     father=[]
     start=None
@@ -19,14 +28,14 @@ class map:
         self.set_start_end(start,end)
     def set_start_end(self,start,end,fill_only=False):
         if fill_only==True:
-            self.map[self.start[0]][self.start[1]]=3
-            self.map[self.end[0]][self.end[1]]=3
+            self.map[self.start[0]][self.start[1]]=5
+            self.map[self.end[0]][self.end[1]]=5
             return
 
         self.start=start
         self.end=end
-        self.map[self.start[0]][self.start[1]]=3
-        self.map[self.end[0]][self.end[1]]=3
+        self.map[self.start[0]][self.start[1]]=5
+        self.map[self.end[0]][self.end[1]]=5
 #        self.print()
     def rand(self,block_percentage=0.5,clr=True):
         if clr==True:
@@ -57,25 +66,25 @@ class map:
 #            plt.pause(1)
             self.way=self.map
             return True
-        if self.map[current[0]][current[1]]!=0 and self.map[current[0]][current[1]]!=3:
+        if self.map[current[0]][current[1]]!=0 and self.map[current[0]][current[1]]!=5:
             return False
 
-        if self.btree_size>=1000:
+        if self.btree_size>=5000:
             return False
 
-        self.map[current[0]][current[1]]=2
+        self.map[current[0]][current[1]]=4
 #        print("==")
 #        self.print()
 #        plt.imshow(self.map)
 #        plt.pause(0.000001)
-        
+
         try:
-            if self.has_way([current[0]+1,current[1]]):
+            if self.has_way([current[0],current[1]+1]):
                 return True
         except IndexError:
             pass
         try:
-            if self.has_way([current[0],current[1]+1]):
+            if self.has_way([current[0]+1,current[1]]):
                 return True
         except IndexError:
             pass
@@ -87,7 +96,7 @@ class map:
         
         self.btree_size+=4
         
-        self.map[current[0]][current[1]]=0
+        self.map[current[0]][current[1]]=2
         return False
     def print(self):
         for row in self.map:
@@ -96,16 +105,18 @@ class map:
 if __name__ == "__main__":
     a=map()
     a.rand(0.4)
-    for row in a.map:
-        print(row)
+    #for row in a.map:
+    #    print(row)
     #plt.imshow(a.map) #空格为紫色，障碍为黄色
     #plt.pause(3600)
-    while(1):
+    while True:
         #print("==============")
-        a.rand(0.3)
+        a.rand(0.2)
         plt.imshow(a.map)
         plt.pause(0.01)
         if a.has_way()==True:
             plt.imshow(a.way)
             plt.pause(0.5)
+            #plt.clf()
+    print("exit?")
         #a.print()
