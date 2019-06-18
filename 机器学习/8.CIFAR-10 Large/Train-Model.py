@@ -10,17 +10,17 @@ import time
 
 import NeuralNetwork as net
 
-BATCH_SIZE=32
+BATCH_SIZE=1
 TURN=1
 TRAINING_STEPS=800000
 DATASET_FOLDER='./dataset/'
 #检测频率
-CHECK_FREQUNCY=5000
+CHECK_FREQUNCY=1000
 ACCURACY_TEST_DATA_UPDATE_FREQUENCY=1
 ACCURACY_TEST_BATCHSIZE=800
 #学习率设置
-LEARNING_RATE_BASE=1.5e-05
-LEARNING_RATE_DECAY_RATE=0.99
+LEARNING_RATE_BASE=1e-03
+LEARNING_RATE_DECAY_RATE=1.0
 LEARNING_RATE_DECAY_STEP=10000
 #正则化比率
 #REGULARIZATION_RATE=0.001
@@ -202,9 +202,9 @@ with tf.Session() as sess:
     dataset=CIFAR10(DATASET_FOLDER)
     if reply=="y":
         if reply_load=='y':
-            net.Learning_Rate_Search(LEARNING_RATE_BASE,train_step,accuracy_testdict,dataset,1e-6,lr_upper_bond=1e-3,lr_raise_rate=1.5,train_step=4000,restore='./Tensorflow_model/model.ckpt',print_data=True)
+            net.Learning_Rate_Search(LEARNING_RATE_BASE,train_step,accuracy_testdict,dataset,1e-6,lr_upper_bond=1e-3,lr_raise_rate=1.2,train_step=4000,restore='./Tensorflow_model/model.ckpt',print_data=True)
         else:
-            net.Learning_Rate_Search(LEARNING_RATE_BASE,train_step,accuracy_testdict,dataset,1e-6,lr_upper_bond=1e-3,lr_raise_rate=1.5,train_step=4000,print_data=True)
+            net.Learning_Rate_Search(LEARNING_RATE_BASE,train_step,accuracy_testdict,dataset,1e-6,lr_upper_bond=1e-3,lr_raise_rate=1.2,train_step=4000,print_data=True)
         reply=input("Input a new learning rate: ")
         sess.run(tf.global_variables_initializer())
         new_lr=tf.assign(LEARNING_RATE_BASE,float(reply))
