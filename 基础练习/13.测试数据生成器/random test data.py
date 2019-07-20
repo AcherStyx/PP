@@ -1,9 +1,18 @@
 import random as rd 
 
-for i in range(1000):
-    if(i % 1000==0):
-        print("%5d" % rd.randint(999,1000),sep=' ',end=' ')
-    print("%5d" % rd.randint(0,1000),sep=' ',end=' ')
-#    print("%5d" % rd.randint(0,10),sep=' ',end=' ')
-#    print("%5d" % rd.randint(0,10),sep=' ',end=' ')
-#    print("%05d" % rd.randint(0,10000),sep=' ',end=' ')
+file = open("data.txt","w")
+
+for i in range(100000):
+    if(i % 10==0):
+        file.write("1 ")
+        file.write("%5d " % rd.randint(1,12))
+    file.write("%5d " % rd.randint(0,1000))
+    file.write("%5d " % rd.randint(0,1000))
+    file.write("%5d " % rd.randint(0,1000))
+    file.write("%5d " % rd.randint(0,1000))
+    file.write("%5d " % rd.randint(0,1000))
+    file.write("%5d " % rd.randint(0,1000))
+    file.write("%5d \n" % rd.randint(0,1000))
+
+file.close()
+    
